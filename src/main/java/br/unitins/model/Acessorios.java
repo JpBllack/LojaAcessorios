@@ -1,13 +1,39 @@
 package br.unitins.model;
 
+import javax.persistence.*;
+
+@Entity
 public class Acessorios extends Produto {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private Cor cor;
     private String tamanho;
+    private Double precoPromocional;
 
-    public Acessorios(Long id, String nome, String descricao, Double preco, Integer estoque, Cor cor, String tamanho) {
-        super(id, nome, descricao, preco, estoque);
+    public Acessorios() {
+        // Chama o construtor padrão da classe Produto
+        super("", "", 0.0, 0); // Preencha com os valores corretos para os parâmetros do construtor de Produto
+    }
+
+    public Acessorios(String nome, String descricao, Double preco, Integer estoque, Cor cor, String tamanho) {
+        // Chama o construtor parametrizado da classe Produto
+        super(nome, descricao, preco, estoque);
         this.cor = cor;
         this.tamanho = tamanho;
+    }
+
+
+    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Cor getCor() {
@@ -27,7 +53,15 @@ public class Acessorios extends Produto {
     }
 
     public Double getPrecoPromocional() {
-        // Implemente aqui a lógica para calcular o preço promocional do acessório
-        return null;
+        if (this.precoPromocional != null) {
+            return this.precoPromocional;
+        } else {
+            return null;
+        }
     }
+
+    public void setPrecoPromocional(Double precoPromocional) {
+        this.precoPromocional = precoPromocional;
+    }
+    
 }

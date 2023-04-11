@@ -7,8 +7,8 @@ public abstract class Produto {
     private Double preco;
     private Integer estoque;
 
-    public Produto(Long id, String nome, String descricao, Double preco, Integer estoque) {
-        this.id = id;
+    public Produto(String nome, String descricao, Double preco, Integer estoque) {
+    
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;

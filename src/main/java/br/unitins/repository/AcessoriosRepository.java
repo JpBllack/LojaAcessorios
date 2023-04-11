@@ -3,7 +3,13 @@ package br.unitins.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
+
 import br.unitins.model.Acessorios;
+
+@Named("acessoriosRepository")
+@ApplicationScoped
 
 public class AcessoriosRepository {
     

@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.unitins.model.Acessorios;
 import br.unitins.repository.AcessoriosRepository;
 
+@Named
 @ApplicationScoped
 public class AcessoriosService {
 
