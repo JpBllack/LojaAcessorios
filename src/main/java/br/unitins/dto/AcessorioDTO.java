@@ -3,7 +3,7 @@ package br.unitins.dto;
 import java.math.BigDecimal;
 
 public class AcessorioDTO {
-    
+
     private String nome;
     private String descricao;
     private BigDecimal preco;
@@ -66,5 +66,13 @@ public class AcessorioDTO {
 
     public void setTamanho(String tamanho) {
         this.tamanho = tamanho;
+    }
+
+    // Método para obter apenas a label da cor
+    public String getCorLabel() {
+        if (this.cor != null) {
+            return this.cor;
+        }
+        return null;
     }
 }
