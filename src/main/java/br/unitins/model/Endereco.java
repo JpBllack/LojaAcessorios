@@ -8,9 +8,17 @@ public class Endereco {
     private String numero;
     private String complemento;
     private String cep;
-    private String municipio;
-    private String estado;
+    private Municipio municipio;
+
     
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
+    }
+
     public Endereco() {
         // Construtor padrão
     }
@@ -73,20 +81,6 @@ public class Endereco {
         this.cep = cep;
     }
     
-    public String getMunicipio() {
-        return municipio;
-    }
-    
-    public void setMunicipio(String municipio) {
-        this.municipio = municipio;
-    }
-    
-    public String getEstado() {
-        return estado;
-    }
-    
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+
     
 }                                                               

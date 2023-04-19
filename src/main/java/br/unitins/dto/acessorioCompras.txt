@@ -1,0 +1,169 @@
+@startuml acessprioCompras
+
+ class Produto {
+    id: Long
+    nome: String
+    descricao: String
+    preco: Double
+    estoque: Integer
+    getPrecoPromocional(): Double
+}
+
+class Acessorio extends Produto {
+    material :String 
+    marca: String
+    tamanho: String
+    getTamanho(): String
+}
+
+enum Cor {
+    - Preto
+    - Prata
+    - Branco
+    - Vermelho
+    - Azul
+}
+
+class Usuario {
+    - id: Long
+    - nome: String
+    - email: String
+    - senha: String
+    - cpf: String
+    + addendereco (endereco:Endereco ): void
+    + removeEndereco(endereco: Endereco): void
+    + addAcessorioListaDesejo(acessorio: Acessorio): void
+    + removeAcessorioListaDesejo(acessorio: Acessorio): void
+    + addTelefone(telefone: Telefone): void
+    + removeTelefone(telefone: Telefone): void
+}
+
+class Telefone {
+    - id: Long
+    - codigoArea: String
+    - numero: String
+    + getCodigoArea(): String
+    + getNumero(): String
+}
+
+
+class Compra {
+    - id: Long
+    - data: Date
+    - totalCompra: Double
+    + addItem(item: ItemCompra): void
+    + removeItem(item: ItemCompra): void
+}
+
+class ItemCompra {
+    - id: Long
+    - quantidade: Integer
+    - preco: Double
+    + getQuantidade(): Integer
+    + getPreco(): Double
+}
+
+class Endereco {
+    - id: Long
+    - principal: Boolean
+    - logradouro: String
+    - bairro: String
+    - numero: String
+    - complemento: String
+    - cep: String
+    - municipio: Municipio
+    + isPrincipal(): Boolean
+    + getLogradouro(): String
+    + getBairro(): String
+    + getNumero(): String
+    + getComplemento(): String
+    + getCep(): String
+    + getMunicipio(): Municipio
+}
+
+class Estado {
+    - id: Long
+    - nome: String
+    + getId(): Long
+    + getNome(): String
+}
+
+class Municipio {
+    - id: Long
+    - nome: String
+    - estado: Estado
+    + getId(): Long
+    + getNome(): String
+    + getEstado(): Estado
+}
+
+ class FormaPagamento {
+
+        - id: Long
+        - confirmacaoPagamento: Boolean
+        - dataConfirmacaoPagamento: Date
+    }
+    
+    class Pix {
+
+        - chave: String
+        - valor: Double
+    }
+
+    class Cartao {
+
+        - valor: Double
+        - numeroCartao: String
+        - nomeCartao: String
+        - validadeCartao: Date
+        - codigoSeguranca: String
+        - cpfTitular: String
+    }
+    
+
+    enum BandeiraCartao {
+
+        + VISA: int
+        + AMERICAN_EXPRESS: int
+        + HIPERCARD: int
+        + DINERS: int
+        + MASTERCARD: int
+        + ELO: int
+    }
+    
+    class BoletoBancario {
+
+        - codigoBarra: String
+        - dataGeracaoBoleto: Date
+        - valor: Double
+        - dataVencimento: Date
+    }
+ 
+    BoletoBancario -up-|> FormaPagamento
+
+    Pix -up-|> FormaPagamento
+
+    Cartao -up-|> FormaPagamento
+    Cartao "*" --> "1" BandeiraCartao
+    
+    Compra "1" *--> "1" FormaPagamento
+
+
+
+Estado "1" *--> "*" Municipio: possui
+Endereco "1" --> "1" Municipio: pertence a
+
+
+Usuario "1" *--> "*" Telefone: fixo
+Usuario "1" *-right-> "*" Endereco
+Usuario "1" *--> "*" Telefone:whatsApp
+
+Compra "1" *--> "*" ItemCompra
+Compra "*" <-- "1" Usuario 
+Compra "*"--> "1" Endereco
+
+
+Produto "1" --> "*" ItemCompra
+Cor "1" <-left-"*"  Acessorio
+
+@enduml

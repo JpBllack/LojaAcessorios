@@ -1,0 +1,38 @@
+package br.unitins.repository;
+
+import br.unitins.model.Estado;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.util.List;
+
+public class EstadoRepository {
+
+    @Inject
+    private EntityManager em;
+
+    public void create(Estado estado) {
+        em.persist(estado);
+    }
+
+    public Estado findById(Long id) {
+        return em.find(Estado.class, id);
+    }
+
+    public void update(Estado estado) {
+        em.merge(estado);
+    }
+
+    public void delete(Long id) {
+        Estado estado = em.find(Estado.class, id);
+        if (estado != null) {
+            em.remove(estado);
+        }
+    }
+
+    public List<Estado> findAll() {
+        TypedQuery<Estado> query = em.createQuery("SELECT e FROM Estado e", Estado.class);
+        return query.getResultList();
+    }
+}
