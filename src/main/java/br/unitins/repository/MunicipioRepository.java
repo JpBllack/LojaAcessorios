@@ -5,7 +5,9 @@ import br.unitins.model.Municipio;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import javax.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public class MunicipioRepository {
 
     @Inject
@@ -34,6 +36,7 @@ public class MunicipioRepository {
     }
 
 }
+
 
 
 
