@@ -2,11 +2,13 @@ package br.unitins.repository;
 
 import br.unitins.model.Estado;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+@ApplicationScoped
 public class EstadoRepository {
 
     @Inject

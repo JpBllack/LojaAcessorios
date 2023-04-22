@@ -10,7 +10,7 @@ public class Usuario {
     private String senha;
     private String cpf;
     private List<Endereco> enderecos;
-    private List<Acessorios> listaDesejo;
+    private List<Acessorios> listaDesejo = new ArrayList<>();
     private List<Telefone> telefones;
 
     public Usuario(Long id, String nome, String email, String senha, String cpf) {
@@ -23,6 +23,7 @@ public class Usuario {
         this.listaDesejo = new ArrayList<>();
         this.telefones = new ArrayList<>();
     }
+
 
     public Long getId() {
         return id;
@@ -67,7 +68,7 @@ public class Usuario {
     public List<Endereco> getEnderecos() {
         return enderecos;
     }
-
+//metodos
     public void addEndereco(Endereco endereco) {
         this.enderecos.add(endereco);
     }

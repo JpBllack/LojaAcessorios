@@ -51,8 +51,11 @@ class Compra {
     - id: Long
     - data: Date
     - totalCompra: Double
+    - formaPagamento: FormaPagamento
     + addItem(item: ItemCompra): void
     + removeItem(item: ItemCompra): void
+    + setFormaPagamento(formaPagamento: FormaPagamento): void
+    + getFormaPagamento(): FormaPagamento
 }
 
 class ItemCompra {

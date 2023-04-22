@@ -2,13 +2,13 @@ package br.unitins.repository;
 
 import br.unitins.model.Municipio;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 public class MunicipioRepository {
 
-    @PersistenceContext
+    @Inject
     private EntityManager em;
 
     @Transactional
@@ -34,4 +34,6 @@ public class MunicipioRepository {
     }
 
 }
+
+
 
