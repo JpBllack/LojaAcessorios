@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.unitins.model.Usuario;
 import br.unitins.repository.UsuarioRepository;
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class UsuarioService {

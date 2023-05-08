@@ -2,10 +2,10 @@ package br.unitins.resource;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import br.unitins.model.Produto;
 import br.unitins.repository.ProdutoRepository;

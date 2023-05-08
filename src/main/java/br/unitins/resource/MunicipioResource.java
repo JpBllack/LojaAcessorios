@@ -3,9 +3,9 @@ package br.unitins.resource;
 import br.unitins.model.Municipio;
 import br.unitins.repository.MunicipioRepository;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 
 
 @Path("/municipios")

@@ -5,8 +5,8 @@ import java.util.List;
 import br.unitins.model.Compra;
 import br.unitins.repository.CompraRepository;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class CompraService {

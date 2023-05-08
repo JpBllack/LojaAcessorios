@@ -2,8 +2,8 @@ package br.unitins.service;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import br.unitins.dto.ItemCompraDTO;
 import br.unitins.model.ItemCompra;
 import br.unitins.repository.ItemCompraRepository;

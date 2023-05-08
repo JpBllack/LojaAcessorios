@@ -3,8 +3,8 @@ package br.unitins.service;
 import br.unitins.model.Estado;
 import br.unitins.repository.EstadoRepository;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped

@@ -1,7 +1,7 @@
 package br.unitins.service;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import br.unitins.model.Produto;
 import br.unitins.repository.ProdutoRepository;

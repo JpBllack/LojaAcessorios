@@ -2,10 +2,10 @@ package br.unitins.repository;
 
 import br.unitins.model.Municipio;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class MunicipioRepository {

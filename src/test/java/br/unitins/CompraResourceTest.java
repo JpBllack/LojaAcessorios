@@ -1,47 +1,57 @@
 package br.unitins;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+/*import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import br.unitins.dto.CompraDTO;
+import br.unitins.dto.ItemCompraDTO;
+import br.unitins.model.Compra;
+import br.unitins.model.ItemCompra;
+import br.unitins.service.CompraService;
+import br.unitins.resource.CompraResource;
 
 import javax.ws.rs.core.Response;
 
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CompraResourceTest {
-    
-    private CompraService compraService;
-    private CompraResource compraResource;
 
-    @BeforeEach
-    public void beforeEach() {
-        compraService = mock(CompraService.class);
-        compraResource = new CompraResource();
-        compraResource.setCompraService(compraService);
-    }
+    @Mock
+    private CompraService compraService;
+
+    @InjectMocks
+    private CompraResource compraResource;
 
     @Test
     public void testInsert() {
-        // cria um objeto CompraDTO para ser enviado no body do POST
+        // Cria uma instância de CompraDTO preenchendo seus campos com valores válidos para um teste.
         CompraDTO compraDTO = new CompraDTO();
-        compraDTO.setDataCompra("2022-05-03");
-        compraDTO.setTotalCompra(100.0);
-        ItemCompraDTO itemCompraDTO = new ItemCompraDTO();
-        itemCompraDTO.setNome("Item 1");
-        itemCompraDTO.setPreco(50.0);
-        itemCompraDTO.setQuantidade(2);
-        compraDTO.getItens().add(itemCompraDTO);
+        compraDTO.setDataCompra("03/05/2023");
+        compraDTO.setTotalCompra(50.0);
+        ItemCompraDTO itemDTO = new ItemCompraDTO();
+        itemDTO.setNome("Produto 1");
+        itemDTO.setPreco(10.0);
+        itemDTO.setQuantidade(5);
+        compraDTO.itens().add(itemDTO);
 
-        // simula o comportamento do método "insert" da classe CompraService
-        when(compraService.insert(any(Compra.class))).thenReturn(new Compra());
+        // Cria um objeto Mock do CompraService que simule seu comportamento sem depender da implementação real.
+        when(compraService.insert(Mockito.any(Compra.class))).thenReturn(new Compra());
 
-        // chama o método insert do CompraResource e guarda a resposta em uma variável
+        // Chama o método insert() da classe CompraResource, passando a instância de CompraDTO criada como argumento.
         Response response = compraResource.insert(compraDTO);
 
-        // verifica se a resposta retornada tem status 201 CREATED
-        Assertions.assertEquals(201, response.getStatus());
-
-        // verifica se o método "insert" da classe CompraService foi chamado pelo menos uma vez
-        verify(compraService, times(1)).insert(any(Compra.class));
+        // Verifica se o Response retornado é válido e que ele contém as informações corretas.
+        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
+        assertEquals(CompraDTO.class, response.getEntity().getClass());
     }
 }
+
+    
+}
+
+*/

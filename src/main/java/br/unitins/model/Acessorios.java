@@ -1,6 +1,6 @@
 package br.unitins.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Acessorios extends Produto {

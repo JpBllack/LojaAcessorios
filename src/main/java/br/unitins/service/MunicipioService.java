@@ -3,8 +3,8 @@ package br.unitins.service;
 import br.unitins.model.Municipio;
 import br.unitins.repository.MunicipioRepository;
 
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 public class MunicipioService {
 
