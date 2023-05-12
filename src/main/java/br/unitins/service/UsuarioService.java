@@ -2,33 +2,28 @@ package br.unitins.service;
 
 import java.util.List;
 
+import br.unitins.dto.UsuarioResponseDTO;
 import br.unitins.model.Usuario;
-import br.unitins.repository.UsuarioRepository;
-import jakarta.enterprise.context.ApplicationScoped;
 
-@ApplicationScoped
-public class UsuarioService {
+public interface UsuarioService {
 
-    private UsuarioRepository repository = new UsuarioRepository();
+    // recursos basicos
+    List<UsuarioResponseDTO> getAll();
 
-    public void create(Usuario usuario) {
-        repository.create(usuario);
-    }
+    UsuarioResponseDTO findById(Long id);
 
-    public Usuario findById(Long id) {
-        return repository.findById(id);
-    }
+    Usuario findByLoginAndSenha(String login, String senha);
 
-    public void update(Usuario usuario) {
-        repository.update(usuario, null);
-    }
+  //  UsuarioResponseDTO create(UsuarioDTO UsuarioDTO);
 
-    public void delete(Long id) {
-        repository.delete(id);
-    }
+   // UsuarioResponseDTO update(Long id, UsuarioDTO UsuarioDTO);
 
-    public List<Usuario> findAll() {
-        return repository.findAll();
-    }
+    void delete(Long id);
+
+    // recursos extras
+
+    List<UsuarioResponseDTO> findByNome(String nome);
+
+    long count();
+
 }
-

@@ -1,53 +1,30 @@
 package br.unitins.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import br.unitins.model.Login;
+
+import br.unitins.model.Estado;
 import br.unitins.model.Usuario;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 @ApplicationScoped
-
-public class UsuarioRepository {
-
-    private List<Usuario> usuarios = new ArrayList<>();
-
-    public void create(Usuario usuario) {
-        usuarios.add(usuario);
+public class UsuarioRepository implements PanacheRepository<Usuario> {
+    
+    public List<Usuario> findByNome(String nome){
+        if (nome == null)
+            return null;
+            
+        return find("UPPER(pessoaFisica.nome) LIKE ?1 ", "%"+nome.toUpperCase()+"%").list();
     }
 
-    public Usuario findById(Long id) {
-        for (Usuario usuario : usuarios) {
-            if (usuario.getId().equals(id)) {
-                return usuario;
-            }
-        }
-        return null;
+    public Usuario findByLoginAndSenha(String login, String senha){
+        if (login == null || senha == null)
+            return null;
+            
+        return find("login = ?1 AND senha = ?2 ", login, senha).firstResult();
     }
+
     
 
-    public void update(Usuario usuario, Login login) {
-        for (Usuario usu : usuarios) {
-            if (usu.getId().equals(usuario.getId())) {
-                usu.setNome(usuario.getNome());
-                usu.setCpf(usuario.getCpf());
-                usu.setEmail(login.getLogin());
-                usu.setSenha(login.getSenha());
-                break;
-            }
-        }
-    }
-
-    public void delete(Long id) {
-        Usuario usuario = findById(id);
-        if (usuario != null) {
-            usuarios.remove(usuario);
-        }
-    }
-    
-
-    public List<Usuario> findAll() {
-        return usuarios;
-    }
 }

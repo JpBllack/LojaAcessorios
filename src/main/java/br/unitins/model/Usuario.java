@@ -1,53 +1,41 @@
 package br.unitins.model;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-public class Usuario {
-    private Long id;
-    private String nome;
-    private String email;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+
+@Entity
+public class Usuario extends DefaultEntity {
+
+    private String login;
     private String senha;
-    private String cpf;
-    private List<Endereco> enderecos;
-    private List<Acessorios> listaDesejo = new ArrayList<>();
-    private List<Telefone> telefones;
 
-    public Usuario(Long id, String nome, String email, String senha, String cpf) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.cpf = cpf;
-        this.enderecos = new ArrayList<>();
-        this.listaDesejo = new ArrayList<>();
-        this.telefones = new ArrayList<>();
-    }
+    @ElementCollection
+    @CollectionTable(name = "perfis", joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id"))
+    @Column(name = "perfil", length = 30)
+    private Set<Perfil> perfis;
 
+    @OneToOne
+    @JoinColumn(name = "id_telefone_celular", unique = true)
+    private Telefone celular;
 
-    public Long getId() {
-        return id;
-    }
+    @OneToOne
+    @JoinColumn(name = "id_telefone_whatsapp", unique = true)
+    private Telefone whastapp;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "usuario")
+    private List<Endereco> listaEndereco;
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @OneToOne
+    @JoinColumn(name = "id_pessoa_fisica", unique = true)
+    private PessoaFisica pessoaFisica;
 
     public String getSenha() {
         return senha;
@@ -57,47 +45,54 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getLogin() {
+        return login;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
-//metodos
-    public void addEndereco(Endereco endereco) {
-        this.enderecos.add(endereco);
+    public Telefone getCelular() {
+        return celular;
     }
 
-    public void removeEndereco(Endereco endereco) {
-        this.enderecos.remove(endereco);
+    public void setCelular(Telefone celular) {
+        this.celular = celular;
     }
 
-    public List<Acessorios> getListaDesejo() {
-        return listaDesejo;
+    public PessoaFisica getPessoaFisica() {
+        return pessoaFisica;
     }
 
-    public void addAcessorioListaDesejo(Acessorios acessorio) {
-        this.listaDesejo.add(acessorio);
+    public void setPessoaFisica(PessoaFisica pessoaFisica) {
+        this.pessoaFisica = pessoaFisica;
     }
 
-    public void removeAcessorioListaDesejo(Acessorios acessorio) {
-        this.listaDesejo.remove(acessorio);
+    public Set<Perfil> getPerfis() {
+        return perfis;
     }
 
-    public List<Telefone> getTelefones() {
-        return telefones;
+    public void setPerfis(Set<Perfil> perfis) {
+        this.perfis = perfis;
     }
 
-    public void addTelefone(Telefone telefone) {
-        this.telefones.add(telefone);
+    public Telefone getWhastapp() {
+        return whastapp;
     }
 
-    public void removeTelefone(Telefone telefone) {
-        this.telefones.remove(telefone);
+    public void setWhastapp(Telefone whastapp) {
+        this.whastapp = whastapp;
     }
+
+    public List<Endereco> getListaEndereco() {
+        return listaEndereco;
+    }
+
+    public void setListaEndereco(List<Endereco> listaEndereco) {
+        this.listaEndereco = listaEndereco;
+    }
+
+    
+
 }
