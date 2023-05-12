@@ -20,7 +20,7 @@ public class UsuarioService {
     }
 
     public void update(Usuario usuario) {
-        repository.update(usuario);
+        repository.update(usuario, null);
     }
 
     public void delete(Long id) {

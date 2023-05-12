@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
-
+import br.unitins.model.Login;
 import br.unitins.model.Usuario;
 
 @ApplicationScoped
@@ -27,13 +27,13 @@ public class UsuarioRepository {
     }
     
 
-    public void update(Usuario usuario) {
+    public void update(Usuario usuario, Login login) {
         for (Usuario usu : usuarios) {
             if (usu.getId().equals(usuario.getId())) {
                 usu.setNome(usuario.getNome());
                 usu.setCpf(usuario.getCpf());
-                usu.setEmail(usuario.getEmail());
-                usu.setSenha(usuario.getSenha());
+                usu.setEmail(login.getLogin());
+                usu.setSenha(login.getSenha());
                 break;
             }
         }
