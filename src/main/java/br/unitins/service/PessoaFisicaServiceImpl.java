@@ -11,7 +11,6 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.NotFoundException;
-
 import br.unitins.dto.PessoaFisicaDTO;
 import br.unitins.dto.PessoaFisicaResponseDTO;
 import br.unitins.model.PessoaFisica;
