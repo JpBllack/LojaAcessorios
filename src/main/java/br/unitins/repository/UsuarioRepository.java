@@ -4,7 +4,6 @@ import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
-import br.unitins.model.Estado;
 import br.unitins.model.Usuario;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
