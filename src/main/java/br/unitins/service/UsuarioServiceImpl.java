@@ -94,4 +94,46 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.findByLoginAndSenha(login, senha);
     }
 
+    @Override
+    public UsuarioResponseDTO findByLogin(String login) {
+        Usuario usuario = usuarioRepository.findByLogin(login);
+        if (usuario == null)
+            throw new NotFoundException("Usuário não encontrado.");
+        return UsuarioResponseDTO.valueOf(usuario);
+    }
+
+    @Override
+    @Transactional
+    public UsuarioResponseDTO update(Long id, String nomeImagem) {
+        return null;
+   
+    }
+
+    @Override
+    @Transactional
+    public boolean verificarSenha(String login, String senhaAntiga) {
+    Usuario usuario = usuarioRepository.findByLogin(login);
+    if (usuario == null)
+        throw new NotFoundException("Usuário não encontrado.");
+
+    return usuario.getSenha().equals(senhaAntiga);
+}
+
+@Override
+@Transactional
+public boolean alterarSenha(String login, String senhaAntiga, String novaSenha) {
+    Usuario usuario = usuarioRepository.findByLogin(login);
+    if (usuario == null)
+        throw new NotFoundException("Usuário não encontrado.");
+
+    if (!usuario.getSenha().equals(senhaAntiga))
+        return false;
+
+    usuario.setSenha(novaSenha);
+    usuarioRepository.persist(usuario);
+
+    return true;
+}
+
+
 }

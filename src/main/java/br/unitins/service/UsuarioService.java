@@ -14,9 +14,13 @@ public interface UsuarioService {
 
     Usuario findByLoginAndSenha(String login, String senha);
 
+    UsuarioResponseDTO findByLogin(String login);
+
   //  UsuarioResponseDTO create(UsuarioDTO UsuarioDTO);
 
    // UsuarioResponseDTO update(Long id, UsuarioDTO UsuarioDTO);
+
+    UsuarioResponseDTO update(Long id, String nomeImagem);
 
     void delete(Long id);
 
@@ -25,5 +29,9 @@ public interface UsuarioService {
     List<UsuarioResponseDTO> findByNome(String nome);
 
     long count();
+
+    boolean verificarSenha(String login, String senhaAntiga);
+
+	boolean alterarSenha(String login, String senhaAntiga, String novaSenha);
 
 }
