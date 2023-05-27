@@ -18,15 +18,15 @@ public record UsuarioResponseDTO(
 ) {
 
     public static UsuarioResponseDTO valueOf(Usuario u) {
-        if (u.getPessoaFisica() == null) 
+        if (u.getPessoa() == null) 
             return new UsuarioResponseDTO(u.getId(), null, null, null, u.getLogin(), null);
         
         return new UsuarioResponseDTO(u.getId(), 
-            u.getPessoaFisica().getCpf(), 
-            u.getPessoaFisica().getNome(),
-            u.getPessoaFisica().getEmail(),
+            u.getPessoa().getCpf(), 
+            u.getPessoa().getNome(),
+            u.getPessoa().getEmail(),
             u.getLogin(), 
-            u.getPessoaFisica().getSexo());
+            u.getPessoa().getSexo());
     }
 
 

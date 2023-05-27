@@ -4,16 +4,17 @@ import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
-import br.unitins.model.PessoaFisica;
+import br.unitins.model.Pessoa;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 @ApplicationScoped
-public class PessoaFisicaRepository implements PanacheRepository<PessoaFisica> {
+public class PessoaRepository implements PanacheRepository<Pessoa> {
     
-    public List<PessoaFisica> findByNome(String nome){
+    public List<Pessoa> findByNome(String nome){
         if (nome == null)
             return null;
         return find("UPPER(nome) LIKE ?1 ", "%"+nome.toUpperCase()+"%").list();
     }
 
 }
+

@@ -16,34 +16,34 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import br.unitins.application.Result;
-import br.unitins.dto.PessoaFisicaDTO;
-import br.unitins.dto.PessoaFisicaResponseDTO;
-import br.unitins.service.PessoaFisicaService;
+import br.unitins.dto.PessoaDTO;
+import br.unitins.dto.PessoaResponseDTO;
+import br.unitins.service.PessoaService;
 
-@Path("/pessoasfisicas")
+@Path("/pessoas")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class PessoaFisicaResource {
+public class PessoaResource {
     
     @Inject
-    PessoaFisicaService pessoaFisicaService;
+    PessoaService pessoaService;
 
     @GET
-    public List<PessoaFisicaResponseDTO> getAll() {
-        return pessoaFisicaService.getAll();
+    public List<PessoaResponseDTO> getAll() {
+        return pessoaService.getAll();
     }
 
     @GET
     @Path("/{id}")
-    public PessoaFisicaResponseDTO findById(@PathParam("id") Long id) {
-        return pessoaFisicaService.findById(id);
+    public PessoaResponseDTO findById(@PathParam("id") Long id) {
+        return pessoaService.findById(id);
     }
 
     @POST
-    public Response insert(PessoaFisicaDTO dto) {
+    public Response insert(PessoaDTO dto) {
         try {
-            PessoaFisicaResponseDTO pessoafisica = pessoaFisicaService.create(dto);
-            return Response.status(Status.CREATED).entity(pessoafisica).build();
+            PessoaResponseDTO pessoa = pessoaService.create(dto);
+            return Response.status(Status.CREATED).entity(pessoa).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
             return Response.status(Status.NOT_FOUND).entity(result).build();
@@ -52,9 +52,9 @@ public class PessoaFisicaResource {
 
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") Long id, PessoaFisicaDTO dto) {
+    public Response update(@PathParam("id") Long id, PessoaDTO dto) {
         try {
-            pessoaFisicaService.update(id, dto);
+            pessoaService.update(id, dto);
             return Response.status(Status.NO_CONTENT).build();
         } catch(ConstraintViolationException e) {
             Result result = new Result(e.getConstraintViolations());
@@ -65,7 +65,7 @@ public class PessoaFisicaResource {
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
-        pessoaFisicaService.delete(id);
+        pessoaService.delete(id);
         return Response.status(Status.NO_CONTENT).build();
     }
 
@@ -73,13 +73,13 @@ public class PessoaFisicaResource {
     @GET
     @Path("/count")
     public long count(){
-        return pessoaFisicaService.count();
+        return pessoaService.count();
     }
 
     @GET
     @Path("/search/{nome}")
-    public List<PessoaFisicaResponseDTO> search(@PathParam("nome") String nome){
-        return pessoaFisicaService.findByNome(nome);
+    public List<PessoaResponseDTO> search(@PathParam("nome") String nome){
+        return pessoaService.findByNome(nome);
         
     }
 }

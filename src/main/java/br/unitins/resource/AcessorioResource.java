@@ -32,7 +32,7 @@ public class AcessorioResource {
     }
 
     @PUT
-    @RolesAllowed({"Admin"})
+   // @RolesAllowed({"Admin"})
     public void update(Acessorios acessorios) {
         service.update(acessorios);
     }

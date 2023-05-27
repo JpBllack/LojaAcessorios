@@ -8,13 +8,7 @@ public class ItemCompra {
     private double preco;     
     private int quantidade;    
 
-    // Construtor da classe
-    public ItemCompra() {
-        this.nome = nome;
-        this.preco = preco;
-        this.quantidade = quantidade;
-    }
-
+    
     // Métodos de acesso (getters e setters)
 
     public Long getItemcompraId() {

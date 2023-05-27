@@ -17,6 +17,10 @@ public class Usuario extends DefaultEntity {
     private String login;
     private String senha;
 
+    @OneToOne
+    @JoinColumn(name = "pessoa_id")
+    private Pessoa pessoa;
+
     @ElementCollection
     @CollectionTable(name = "perfis", joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id"))
     @Column(name = "perfil", length = 30)
@@ -33,9 +37,14 @@ public class Usuario extends DefaultEntity {
     @OneToMany(mappedBy = "usuario")
     private List<Endereco> listaEndereco;
 
-    @OneToOne
-    @JoinColumn(name = "id_pessoa_fisica", unique = true)
-    private PessoaFisica pessoaFisica;
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
+
 
     public String getSenha() {
         return senha;
@@ -61,14 +70,6 @@ public class Usuario extends DefaultEntity {
         this.celular = celular;
     }
 
-    public PessoaFisica getPessoaFisica() {
-        return pessoaFisica;
-    }
-
-    public void setPessoaFisica(PessoaFisica pessoaFisica) {
-        this.pessoaFisica = pessoaFisica;
-    }
-
     public Set<Perfil> getPerfis() {
         return perfis;
     }
@@ -92,7 +93,5 @@ public class Usuario extends DefaultEntity {
     public void setListaEndereco(List<Endereco> listaEndereco) {
         this.listaEndereco = listaEndereco;
     }
-
-    
 
 }

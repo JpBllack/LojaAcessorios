@@ -1,9 +1,20 @@
 package br.unitins.model;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Municipio {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
+
+    @ManyToOne
+    @JoinColumn(name = "estado_id")
     private Estado estado;
+
+
 
     public Long getId() {
         return id;

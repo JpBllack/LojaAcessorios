@@ -1,6 +1,10 @@
 package br.unitins.model;
 
+import jakarta.persistence.*;
+
 public abstract class Produto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String descricao;
