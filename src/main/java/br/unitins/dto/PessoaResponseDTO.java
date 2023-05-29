@@ -7,13 +7,13 @@ import br.unitins.model.Sexo;
 
 public record PessoaResponseDTO(
     Long id,
-    String cpf,
     String nome,
+    String cpf,
     @JsonInclude(JsonInclude.Include.NON_NULL)
     Sexo sexo
 ) {
     public PessoaResponseDTO(Pessoa pf) {
-        this(pf.getId(), pf.getCpf(), pf.getNome(), pf.getSexo()); 
+        this(pf.getId(), pf.getNome(), pf.getCpf(), pf.getSexo()); 
     }
 
 

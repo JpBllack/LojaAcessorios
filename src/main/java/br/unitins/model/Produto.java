@@ -2,6 +2,7 @@ package br.unitins.model;
 
 import jakarta.persistence.*;
 
+@Entity
 public abstract class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

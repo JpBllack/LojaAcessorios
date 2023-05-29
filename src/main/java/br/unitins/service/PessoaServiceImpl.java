@@ -46,8 +46,8 @@ public class PessoaServiceImpl implements PessoaService {
         validar(pessoaDTO);
 
         Pessoa entity = new Pessoa();
-        entity.setCpf(pessoaDTO.cpf());
         entity.setNome(pessoaDTO.nome());
+        entity.setCpf(pessoaDTO.cpf());
         entity.setSexo(Sexo.valueOf(pessoaDTO.sexo()));
 
         pessoaRepository.persist(entity);
@@ -61,8 +61,8 @@ public class PessoaServiceImpl implements PessoaService {
         validar(pessoaDTO);
    
         Pessoa entity = pessoaRepository.findById(id);
-        entity.setCpf(pessoaDTO.cpf());
         entity.setNome(pessoaDTO.nome());
+        entity.setCpf(pessoaDTO.cpf());
         entity.setSexo(Sexo.valueOf(pessoaDTO.sexo()));
 
         return new PessoaResponseDTO(entity);

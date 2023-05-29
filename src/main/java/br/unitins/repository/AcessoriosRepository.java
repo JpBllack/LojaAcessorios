@@ -5,13 +5,15 @@ import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
-
+import jakarta.persistence.*;
 import br.unitins.model.Acessorios;
 
 @Named("acessoriosRepository")
 @ApplicationScoped
 
 public class AcessoriosRepository {
+    @PersistenceContext
+    private EntityManager em;
     
     private List<Acessorios> acessorios;
 
@@ -57,7 +59,8 @@ public class AcessoriosRepository {
     
 
     public List<Acessorios> findAll() {
-        return acessorios;
+        TypedQuery<Acessorios> query = em.createQuery("SELECT a FROM Acessorios a", Acessorios.class);
+        return query.getResultList();
     }
 
 }

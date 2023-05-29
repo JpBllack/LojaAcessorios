@@ -1,5 +1,6 @@
-package br.unitins.service;
 
+package br.unitins.service;
+/*
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -34,3 +35,4 @@ public class ProdutoService {
         produtoRepository.removerProduto(id);
     }
 }
+*/

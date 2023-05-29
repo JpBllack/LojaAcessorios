@@ -19,13 +19,13 @@ public class AcessorioResource {
     private AcessoriosService service;
 
     @POST
-    @RolesAllowed({"Admin"})
+  //  @RolesAllowed({"Admin"})
     public void create(Acessorios acessorios) {
         service.create(acessorios);
     }
 
     @GET
-    @RolesAllowed({"Admin"})
+   // @RolesAllowed({"Admin"})
     @Path("/{id}")
     public Acessorios findById(@PathParam("id") Long id) {
         return service.findById(id);
@@ -38,14 +38,14 @@ public class AcessorioResource {
     }
 
     @DELETE
-    @RolesAllowed({"Admin"})
+   // @RolesAllowed({"Admin"})
     @Path("/{id}")
     public void delete(@PathParam("id") Long id) {
         service.delete(id);
     }
 
     @GET
-    @RolesAllowed({"Admin","User"})
+   // @RolesAllowed({"Admin","User"})
     public List<Acessorios> findAll() {
         return service.findAll();
     }
