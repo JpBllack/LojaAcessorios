@@ -1,8 +1,10 @@
 package br.unitins.form;
 
-import org.jboss.resteasy.annotations.providers.multipart.PartType;
 
 import jakarta.ws.rs.FormParam;
+
+
+
 
 public class ImageForm {
 
@@ -10,8 +12,8 @@ public class ImageForm {
     private String nomeImagem;
 
     @FormParam("imagem")
-    @PartType("application/octet-stream")
-    private byte[] imagem;s
+    
+    private byte[] imagem;
 
     public String getNomeImagem() {
         return nomeImagem;
