@@ -13,8 +13,8 @@ public record CompraDTO(Long compraId, double totalCompra, List<ItemCompraDTO> i
         for (ItemCompra itemCompra : compra.getItens()) {
             ItemCompraDTO itemCompraDTO = new ItemCompraDTO(
                     itemCompra.getItemcompraId(),
-                    itemCompra.getNome(),
-                    itemCompra.getPreco(),
+                    itemCompra.getProduto().getNome(),
+                    itemCompra.getProduto().getPreco(),
                     itemCompra.getQuantidade()
             );
             itemCompraDTOs.add(itemCompraDTO);

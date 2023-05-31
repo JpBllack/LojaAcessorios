@@ -12,8 +12,8 @@ public record ItemCompraDTO(Long itemcompraId,String nome, double preco, int qua
         for (ItemCompra itemCompra : items) {
             ItemCompraDTO itemCompraDTO = new ItemCompraDTO(
                 itemCompra.getItemcompraId(),
-                itemCompra.getNome(),
-                itemCompra.getPreco(),
+                itemCompra.getProduto().getNome(),
+                itemCompra.getProduto().getPreco(),
                 itemCompra.getQuantidade()
             );
             itemCompraDTOs.add(itemCompraDTO);

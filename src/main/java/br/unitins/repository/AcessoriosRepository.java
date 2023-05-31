@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.*;
 import br.unitins.model.Acessorios;
@@ -12,9 +13,9 @@ import br.unitins.model.Acessorios;
 @ApplicationScoped
 
 public class AcessoriosRepository {
-    @PersistenceContext
+    @Inject
     private EntityManager em;
-    
+
     private List<Acessorios> acessorios;
 
     public AcessoriosRepository() {
@@ -47,7 +48,7 @@ public class AcessoriosRepository {
             }
         }
     }
-    
+
     public Acessorios findById(Long id) {
         for (Acessorios acessorio : acessorios) {
             if (acessorio.getId().equals(id)) {
@@ -56,11 +57,10 @@ public class AcessoriosRepository {
         }
         return null;
     }
-    
 
     public List<Acessorios> findAll() {
-        TypedQuery<Acessorios> query = em.createQuery("SELECT a FROM Acessorios a", Acessorios.class);
-        return query.getResultList();
+        return new ArrayList<>(acessorios);
     }
+    
 
 }

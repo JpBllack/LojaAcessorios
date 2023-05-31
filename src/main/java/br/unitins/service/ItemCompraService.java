@@ -24,8 +24,6 @@ public class ItemCompraService {
     public void update(ItemCompraDTO itemCompraDTO) {
         ItemCompra itemCompra = itemCompraRepository.findById(itemCompraDTO.itemcompraId());
         if (itemCompra != null) {
-            itemCompra.setNome(itemCompraDTO.nome());
-            itemCompra.setPreco(itemCompraDTO.preco());
             itemCompra.setQuantidade(itemCompraDTO.quantidade());
             itemCompraRepository.update(itemCompra);
         }
@@ -49,7 +47,8 @@ public class ItemCompraService {
     public ItemCompraDTO findById(long id) {
         ItemCompra itemCompra = itemCompraRepository.findById(id);
         if (itemCompra != null) {
-            return new ItemCompraDTO(itemCompra.getItemcompraId(), itemCompra.getNome(), itemCompra.getPreco(), itemCompra.getQuantidade());
+            return new ItemCompraDTO(itemCompra.getItemcompraId(), 
+            itemCompra.getProduto().getNome( ) ,itemCompra.getProduto().getPreco(), itemCompra.getQuantidade());
         }
         return null;
     }

@@ -1,12 +1,28 @@
 package br.unitins.model;
 
+import jakarta.persistence.*;
+
 // Definição da classe ItemCompra
+@Entity
 public class ItemCompra {
     // Atributos da classe
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemcompraId;
-    private String nome;        
-    private double preco;     
-    private int quantidade;    
+    @ManyToOne
+    @JoinColumn(name = "produto_id")
+    private Produto produto;
+    
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    private int quantidade;
+  
 
     
     // Métodos de acesso (getters e setters)
@@ -19,22 +35,6 @@ public class ItemCompra {
         this.itemcompraId = itemcompraId;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
-
     public int getQuantidade() {
         return quantidade;
     }
@@ -45,7 +45,7 @@ public class ItemCompra {
 
     // Método para calcular o total do item (preço * quantidade)
     public double getTotalItem() {
-        return preco * quantidade;
+        return produto.getPreco() * quantidade;
     }
 }
 

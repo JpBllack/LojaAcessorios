@@ -22,9 +22,8 @@ public class ItemCompraRepository {
 
     public void update(ItemCompra itemCompra) {
         for (ItemCompra item : itensCompra) {
-            if (item.getNome().equals(itemCompra.getNome())) {
+            if (item.getItemcompraId().equals(itemCompra.getItemcompraId())) {
                 // Atualizar os atributos do item de compra
-                item.setPreco(itemCompra.getPreco());
                 item.setQuantidade(itemCompra.getQuantidade());
                 break;
             }

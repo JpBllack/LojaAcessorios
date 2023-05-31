@@ -28,8 +28,6 @@ public class CompraResource {
         compra.setTotalCompra(compraDTO.totalCompra());
         for (ItemCompraDTO itemCompraDTO : compraDTO.itens()) {
             ItemCompra itemCompra = new ItemCompra();
-            itemCompra.setNome(itemCompraDTO.nome());
-            itemCompra.setPreco(itemCompraDTO.preco());
             itemCompra.setQuantidade(itemCompraDTO.quantidade());
             compra.addItem(itemCompra);
         }
@@ -49,8 +47,6 @@ public class CompraResource {
         for (ItemCompraDTO itemCompraDTO : compraDTO.itens()) {
             ItemCompra itemCompra = new ItemCompra();
             itemCompra.setItemcompraId(itemCompraDTO.itemcompraId());
-            itemCompra.setNome(itemCompraDTO.nome());
-            itemCompra.setPreco(itemCompraDTO.preco());
             itemCompra.setQuantidade(itemCompraDTO.quantidade());
             compra.addItem(itemCompra);
         }
