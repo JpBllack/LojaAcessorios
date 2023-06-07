@@ -1,87 +1,115 @@
 package br.unitins.resource;
 
-import br.unitins.dto.CompraDTO;
-import br.unitins.dto.ItemCompraDTO;
-import br.unitins.model.Compra;
-import br.unitins.model.ItemCompra;
-import br.unitins.service.CompraService;
+import java.util.List;
+import org.jboss.logging.Logger;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
+import br.unitins.application.Result;
+import br.unitins.dto.CartaoCreditoDTO;
+import br.unitins.dto.CompraResponseDTO;
+import br.unitins.dto.UsuarioResponseDTO;
+import br.unitins.service.CompraService;
+import br.unitins.service.UsuarioServiceImpl;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.ws.rs.core.Response.Status;
 
-@Path("/compras")
-@Produces(MediaType.APPLICATION_JSON)
+@Path("/compra")
 @Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class CompraResource {
 
     @Inject
-    private CompraService compraService;
+    CompraService compraService;
+
+    @Inject
+    JsonWebToken jwt;
+
+    @Inject
+    UsuarioServiceImpl usuarioService;
+
+    private static final Logger LOG = Logger.getLogger(CompraResource.class);
+
+    @GET
+    public List<CompraResponseDTO> getAll() {
+        return compraService.getAll();
+    }
+
+    @GET
+    @Path("/{id}")
+    public CompraResponseDTO findById(@PathParam("id") Long id) {
+        return compraService.findById(id);
+    }
 
     @POST
-    public Response insert(CompraDTO compraDTO) {
-        Compra compra = new Compra();
-        compra.setDataCompra(compraDTO.dataCompra());
-        compra.setTotalCompra(compraDTO.totalCompra());
-        for (ItemCompraDTO itemCompraDTO : compraDTO.itens()) {
-            ItemCompra itemCompra = new ItemCompra();
-            itemCompra.setQuantidade(itemCompraDTO.quantidade());
-            compra.addItem(itemCompra);
-        }
-        Compra compraInserida = compraService.insert(compra);
-        return Response.status(Response.Status.CREATED).entity(CompraDTO.convert(compraInserida)).build();
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"User"})
+    public Response comprarItens() {
+
+        String login = jwt.getSubject();
+
+        UsuarioResponseDTO usuario = usuarioService.findByLogin(login);
+
+        compraService.comprarItens(usuario.id());
+
+        return Response.status(Status.CREATED).build();
+        
     }
 
-    @PUT
-    @Path("/{id}")
-    public Response update(@PathParam("id") long id, CompraDTO compraDTO) {
-        Compra compra = compraService.findById(id);
-        if (compra == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+    @PATCH
+    @Path("/carrinho/pagar-pix")
+    @RolesAllowed({ "User" })
+    public Response pagarPix() {
+        Result result = null;
+
+        try {
+
+            String login = jwt.getSubject();
+
+            UsuarioResponseDTO usuario = usuarioService.findByLogin(login);
+
+            compraService.efetuarPagamentoPix(usuario.id());
+
+            LOG.info("Pagamento com pix efetuado com sucesso.");
+            return Response.status(Status.ACCEPTED).build();
+        } catch (NullPointerException e) {
+            LOG.error("Erro ao efetuar o pagamento com pix.", e);
+            result = new Result(e.getMessage(), false);
+
+            return Response.status(Status.NOT_FOUND).entity(result).build();
         }
-        compra.setTotalCompra(compraDTO.totalCompra());
-        compra.getItens().clear();
-        for (ItemCompraDTO itemCompraDTO : compraDTO.itens()) {
-            ItemCompra itemCompra = new ItemCompra();
-            itemCompra.setItemcompraId(itemCompraDTO.itemcompraId());
-            itemCompra.setQuantidade(itemCompraDTO.quantidade());
-            compra.addItem(itemCompra);
-        }
-        Compra compraAtualizada = compraService.update(compra);
-        return Response.ok(CompraDTO.convert(compraAtualizada)).build();
     }
 
-    @DELETE
-    @Path("/{id}")
-    public Response delete(@PathParam("id") long id) {
-        Compra compra = compraService.findById(id);
-        if (compra == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        compraService.delete(id);
-        return Response.noContent().build();
-    }
+    @PATCH
+    @Path("/carrinho/pagar-cartao-credito")
+    @RolesAllowed({ "User" })
+    public Response pagarCartaoCredito(CartaoCreditoDTO cartaoCreditoDTO) {
+        Result result = null;
 
-    @GET
-    @Path("/{id}")
-    public Response findById(@PathParam("id") long id) {
-        Compra compra = compraService.findById(id);
-        if (compra == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        return Response.ok(CompraDTO.convert(compra)).build();
-    }
+        try {
 
-    @GET
-    public Response findAll() {
-        List<Compra> compras = compraService.findAll();
-        List<CompraDTO> compraDTOs = new ArrayList<>();
-        for (Compra compra : compras) {
-            compraDTOs.add(CompraDTO.convert(compra));
+            String login = jwt.getSubject();
+
+            UsuarioResponseDTO usuario = usuarioService.findByLogin(login);
+
+            compraService.efetuarPagamentoCartaoCredito(usuario.id(), cartaoCreditoDTO);
+
+            LOG.info("Pagamento com cartão de crédito efetuado com sucesso.");
+            return Response.status(Status.ACCEPTED).build();
+        } catch (NullPointerException e) {
+            LOG.error("Erro ao efetuar o pagamento com cartão de crédito.", e);
+            result = new Result(e.getMessage(), false);
+
+            return Response.status(Status.NOT_FOUND).entity(result).build();
         }
-        return Response.ok(compraDTOs).build();
     }
 }

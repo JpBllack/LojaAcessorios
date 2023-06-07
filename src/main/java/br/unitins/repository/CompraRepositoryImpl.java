@@ -1,4 +1,4 @@
-package br.unitins.repository;
+/*package br.unitins.repository;
 
 import br.unitins.model.Compra;
 
@@ -41,3 +41,4 @@ public class CompraRepositoryImpl implements CompraRepositoryInterface {
         return new ArrayList<>(compras.values());
     }
 }
+*/

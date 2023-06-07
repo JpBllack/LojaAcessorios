@@ -50,4 +50,8 @@ public class ItemCompraRepository {
     public List<ItemCompra> findAll() {
         return itensCompra;
     }
+
+    public long count() {
+        return 0;
+    }
 }

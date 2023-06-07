@@ -1,4 +1,4 @@
-package br.unitins.dto;
+/*package br.unitins.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,5 +26,5 @@ public record CompraDTO(Long compraId, double totalCompra, List<ItemCompraDTO> i
                 compra.getDataCompra() // Passa a data de compra durante a conversão
         );
     }
-}
+}*/
 

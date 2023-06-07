@@ -2,34 +2,19 @@ package br.unitins.service;
 
 import java.util.List;
 
-import br.unitins.model.Compra;
-import br.unitins.repository.CompraRepository;
+import br.unitins.dto.CartaoCreditoDTO;
+import br.unitins.dto.CompraResponseDTO;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+public interface CompraService {
+    // recursos basicos
+    List<CompraResponseDTO> getAll();
 
-@ApplicationScoped
-public class CompraService {
-    @Inject
-    private CompraRepository compraRepository;
+    CompraResponseDTO findById(Long id);
 
-    public Compra insert(Compra compra) {
-        return compraRepository.insert(compra);
-    }
+    CompraResponseDTO comprarItens(Long idUsuario);
 
-    public Compra update(Compra compra) {
-        return compraRepository.update(compra);
-    }
+    void efetuarPagamentoPix(Long idUsuario);
 
-    public void delete(long compraId) {
-        compraRepository.delete(compraId);
-    }
+    void efetuarPagamentoCartaoCredito(Long idUsuario, CartaoCreditoDTO cartaoCreditoDTO);
 
-    public Compra findById(long compraId) {
-        return compraRepository.findById(compraId);
-    }
-
-    public List<Compra> findAll() {
-        return compraRepository.findAll();
-    }
 }

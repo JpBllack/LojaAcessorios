@@ -1,55 +1,61 @@
 package br.unitins.model;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class Compra {
-    private long compraId;
-    private Date dataCompra;
-    private Double totalCompra;
-    private List<ItemCompra> itens;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
-    public Compra() {
-        this.itens = new ArrayList<ItemCompra>();
-    }
+@Entity
+public class Compra extends DefaultEntity {
+    
+    private double totalCompra = 0;
 
-    public long getCompraId() {
-        return compraId;
-    }
+    @OneToMany
+    @JoinColumn(name = "id_compra")
+    private List<ItemCompra> listaDeItens;
 
-    public void setCompraId(long compraId) {
-        this.compraId = compraId;
-    }
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
-    public Date getDataCompra() {
-        return dataCompra;
-    }
+    @OneToOne
+    @JoinColumn(name = "id_pagamento", unique = true)
+    private FormaPagamento pagamento;
 
-    public void setDataCompra(Date dataCompra) {
-        this.dataCompra = dataCompra;
-    }
-
-    public Double getTotalCompra() {
+    public double getTotalCompra() {
         return totalCompra;
     }
 
-    public void setTotalCompra(Double totalCompra) {
+    public void setTotalCompra(double totalCompra) {
         this.totalCompra = totalCompra;
     }
 
-    // Adiciona um item à lista de itens da compra
-    public void addItem(ItemCompra item) {
-        this.itens.add(item);
+    public List<ItemCompra> getListaDeItens() {
+        return listaDeItens;
     }
 
-    // Remove um item da lista de itens da compra
-    public void removeItem(ItemCompra item) {
-        this.itens.remove(item);
+    public void setListaDeItens(List<ItemCompra> listaDeItens) {
+        this.listaDeItens = listaDeItens;
     }
 
-    // Retorna a lista de itens da compra
-    public List<ItemCompra> getItens() {
-        return itens;
+    public Usuario getUsuario() {
+        return usuario;
     }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public FormaPagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(FormaPagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    
 }
