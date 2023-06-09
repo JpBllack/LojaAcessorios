@@ -1,5 +1,6 @@
 package br.unitins.model;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -55,6 +56,15 @@ public class Compra extends DefaultEntity {
 
     public void setPagamento(FormaPagamento pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public Long getCompraId() {
+        return getId();
+    }
+
+    public Date getDataCompra() {
+       
+        return null;
     }
 
     

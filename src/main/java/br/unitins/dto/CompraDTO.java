@@ -1,4 +1,4 @@
-/*package br.unitins.dto;
+package br.unitins.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +10,7 @@ import br.unitins.model.ItemCompra;
 public record CompraDTO(Long compraId, double totalCompra, List<ItemCompraDTO> itens, Date dataCompra) {
     public static CompraDTO convert(Compra compra) {
         List<ItemCompraDTO> itemCompraDTOs = new ArrayList<>();
-        for (ItemCompra itemCompra : compra.getItens()) {
+        for (ItemCompra itemCompra : compra.getListaDeItens()) {
             ItemCompraDTO itemCompraDTO = new ItemCompraDTO(
                     itemCompra.getItemcompraId(),
                     itemCompra.getProduto().getNome(),
@@ -26,5 +26,5 @@ public record CompraDTO(Long compraId, double totalCompra, List<ItemCompraDTO> i
                 compra.getDataCompra() // Passa a data de compra durante a conversão
         );
     }
-}*/
+}
 
