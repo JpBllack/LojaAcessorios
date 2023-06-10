@@ -1,47 +1,95 @@
 package br.unitins.resource;
 
-import br.unitins.model.Estado;
-import br.unitins.service.EstadoService;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+
+
+import br.unitins.application.Result;
+import br.unitins.dto.EstadoDTO;
+import br.unitins.dto.EstadoResponseDTO;
+import br.unitins.service.EstadoService;
+
 @Path("/estados")
-@Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@Produces(MediaType.APPLICATION_JSON)
 public class EstadoResource {
-
+    
     @Inject
-    private EstadoService service;
+    EstadoService estadoService;
 
-    @POST
-    public void create(Estado estado) {
-        service.create(estado);
+    @GET
+    public List<EstadoResponseDTO> getAll() {
+        return estadoService.getAll();
     }
 
     @GET
     @Path("/{id}")
-    public Estado findById(@PathParam("id") Long id) {
-        return service.findById(id);
+    @RolesAllowed({"Admin","User"})
+    public EstadoResponseDTO findById(@PathParam("id") Long id) {
+        return estadoService.findById(id);
+    }
+
+    @POST
+    @RolesAllowed({"Admin"})
+    public Response insert(EstadoDTO dto) {
+        try {
+            EstadoResponseDTO estado = estadoService.create(dto);
+            return Response.status(Status.CREATED).entity(estado).build();
+        } catch(ConstraintViolationException e) {
+            Result result = new Result(e.getConstraintViolations());
+            return Response.status(Status.NOT_FOUND).entity(result).build();
+        }
     }
 
     @PUT
-    public void update(Estado estado) {
-        service.update(estado);
+    @Path("/{id}")
+    @RolesAllowed({"Admin"})
+    public Response update(@PathParam("id") Long id, EstadoDTO dto) {
+        try {
+            EstadoResponseDTO estado = estadoService.update(id, dto);
+            return Response.ok(estado).status(Status.NO_CONTENT).build();
+        } catch(ConstraintViolationException e) {
+            Result result = new Result(e.getConstraintViolations());
+            return Response.status(Status.NOT_FOUND).entity(result).build();
+        }      
     }
 
     @DELETE
     @Path("/{id}")
-    public void delete(@PathParam("id") Long id) {
-        service.delete(id);
+    @RolesAllowed({"Admin"})
+    public Response delete(@PathParam("id") Long id) {
+        estadoService.delete(id);
+        return Response.status(Status.NO_CONTENT).build();
+    }
+
+
+    @GET
+    @Path("/count")
+    @RolesAllowed({"Admin","User"})
+    public long count(){
+        return estadoService.count();
     }
 
     @GET
-    public List<Estado> findAll() {
-        return service.findAll();
+    @Path("/search/{nome}")
+    @RolesAllowed({"Admin","User"})
+    public List<EstadoResponseDTO> search(@PathParam("nome") String nome){
+        return estadoService.findByNome(nome);
+        
     }
 }
+

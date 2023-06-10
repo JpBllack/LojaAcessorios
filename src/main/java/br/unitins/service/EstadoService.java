@@ -1,35 +1,27 @@
 package br.unitins.service;
 
-import br.unitins.model.Estado;
-import br.unitins.repository.EstadoRepository;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import java.util.List;
 
-@ApplicationScoped
-public class EstadoService {
+import br.unitins.dto.EstadoDTO;
+import br.unitins.dto.EstadoResponseDTO;
 
-    @Inject
-    private EstadoRepository repository;
+public interface EstadoService {
 
-    public void create(Estado estado) {
-        repository.create(estado);
-    }
+  
+    List<EstadoResponseDTO> getAll();
 
-    public Estado findById(Long id) {
-        return repository.findById(id);
-    }
+    EstadoResponseDTO findById(Long id);
 
-    public void update(Estado estado) {
-        repository.update(estado);
-    }
+    EstadoResponseDTO create(EstadoDTO dto);
 
-    public void delete(Long id) {
-        repository.delete(id);
-    }
+    EstadoResponseDTO update(Long id, EstadoDTO productDTO);
 
-    public List<Estado> findAll() {
-        return repository.findAll();
-    }
+    void delete(Long id);
+
+    
+
+    List<EstadoResponseDTO> findByNome(String nome);
+
+    long count();
+
 }

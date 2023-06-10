@@ -1,6 +1,6 @@
 package br.unitins.resource;
 
-import jakarta.annotation.security.RolesAllowed;
+//import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -19,33 +19,33 @@ public class AcessorioResource {
     private AcessoriosService service;
 
     @POST
-   @RolesAllowed({"Admin"})
+   //@RolesAllowed({"Admin"})
     public void create(Acessorios acessorios) {
         service.create(acessorios);
     }
 
     @GET
-    @RolesAllowed({"Admin"})
+    //@RolesAllowed({"Admin"})
     @Path("/{id}")
     public Acessorios findById(@PathParam("id") Long id) {
         return service.findById(id);
     }
 
     @PUT
-   @RolesAllowed({"Admin"})
+   //@RolesAllowed({"Admin"})
     public void update(Acessorios acessorios) {
         service.update(acessorios);
     }
 
     @DELETE
-   @RolesAllowed({"Admin"})
+   //@RolesAllowed({"Admin"})
     @Path("/{id}")
     public void delete(@PathParam("id") Long id) {
         service.delete(id);
     }
 
     @GET
-   @RolesAllowed({"Admin","User"})
+   //@RolesAllowed({"Admin","User"})
     public List<Acessorios> findAll() {
         return service.findAll();
     }
