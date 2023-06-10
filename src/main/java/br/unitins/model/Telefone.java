@@ -1,10 +1,15 @@
 package br.unitins.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 @Entity
 public class Telefone extends DefaultEntity {
+
+    @Column(nullable = false, length = 3)
     private String codigoArea;
+
+    @Column(nullable = false, length = 10)
     private String numero;
 
     public String getCodigoArea() {
@@ -22,5 +27,7 @@ public class Telefone extends DefaultEntity {
     public void setNumero(String numero) {
         this.numero = numero;
     }
+
+    
 
 }

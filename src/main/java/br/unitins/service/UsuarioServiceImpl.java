@@ -36,41 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         return UsuarioResponseDTO.valueOf(pessoafisica);
     }
 
-    // @Override
-    // @Transactional
-    // public UsuarioResponseDTO create(UsuarioDTO usuarioDTO) throws ConstraintViolationException {
-    //     validar(usuarioDTO);
-
-    //     Usuario entity = new Usuario();
-    //     entity.setCpf(usuarioDTO.cpf());
-    //     entity.setNome(usuarioDTO.nome());
-    //     entity.setSexo(Sexo.valueOf(usuarioDTO.sexo()));
-
-    //     usuarioRepository.persist(entity);
-
-    //     return new UsuarioResponseDTO(entity);
-    // }
-
-    // @Override
-    // @Transactional
-    // public UsuarioResponseDTO update(Long id, UsuarioDTO usuarioDTO) throws ConstraintViolationException{
-    //     validar(usuarioDTO);
-   
-    //     Usuario entity = usuarioRepository.findById(id);
-    //     entity.setCpf(usuarioDTO.cpf());
-    //     entity.setNome(usuarioDTO.nome());
-    //     entity.setSexo(Sexo.valueOf(usuarioDTO.sexo()));
-
-    //     return new UsuarioResponseDTO(entity);
-    // }
-
-    // private void validar(UsuarioDTO usuarioDTO) throws ConstraintViolationException {
-    //     Set<ConstraintViolation<UsuarioDTO>> violations = validator.validate(usuarioDTO);
-    //     if (!violations.isEmpty())
-    //         throw new ConstraintViolationException(violations);
-
-
-    // }
+    
 
     @Override
     @Transactional

@@ -6,7 +6,6 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 import br.unitins.dto.AcessorioDTO;
-import br.unitins.dto.AcessorioResponseDTO;
 import br.unitins.model.Acessorios;
 import br.unitins.service.AcessoriosService;
 
@@ -34,7 +33,7 @@ public class AcessorioResourceTest {
 
     @Test
     public void testInsert() {
-        AcessorioDTO ace = new AcessorioDTO(null, null, null, null, null, null);
+        AcessorioDTO ace = new AcessorioDTO("Capinha","capinha mt loka",20.0,"null", "PRETO", "UNICO");
         given()
                 .contentType(ContentType.JSON)
                 .body(ace)
@@ -42,18 +41,21 @@ public class AcessorioResourceTest {
                 .then()
                 .statusCode(201)
                 .body("id", notNullValue(),
-                        "nome", is("Acessorio1"),
-                        "descricao", is("Descrição do Acessório 1"),
-                        "quantidade", is(10));
+                        "nome", is("Capinha"),
+                        "descricao", is("capinha mt loka"),
+                        "preco", is(20.0),
+                        "imagemUrl", is("null"),
+                        "cor", is ("PRETO"),
+                        "tamanho", is ("UNICO")
+                        );
     }
 
     @Test
     public void testUpdate() {
-        // Adicionando um acessório no banco de dados
-        AcessorioDTO acessorio = new AcessorioDTO(null, null, null, null, null, null);
-        Long id = (long) 1;
+    
+        Long id = 1l;
         // Criando outro acessório para atualização
-        AcessorioDTO acessorioUpdate = new AcessorioDTO(null, null, null, null, null, null );
+        AcessorioDTO acessorioUpdate = new AcessorioDTO("fone","fonelegal",20.0,"null", "BRANCO", "UNICO");
         given()
                 .contentType(ContentType.JSON)
                 .body(acessorioUpdate)
@@ -62,16 +64,18 @@ public class AcessorioResourceTest {
                 .statusCode(204);
         // Verificando se os dados foram atualizados no banco de dados
         Acessorios acessorioResponse = acessorioService.findById(id);
-        assertThat(acessorioResponse.getNome(), is("Acessorio2"));
-        assertThat(acessorioResponse.getDescricao(), is("Descrição do Acessório 2"));
-        assertThat(acessorioResponse.getEstoque(), is(5));
+        assertThat(acessorioResponse.getNome(), is("fone"));
+        assertThat(acessorioResponse.getDescricao(), is("fonelegal"));
+        assertThat(acessorioResponse.getPreco(), is(20.0));
+        assertThat(acessorioResponse.getNomeImagem(),is ("null"));
+        assertThat(acessorioResponse.getCor(), is("BRANCO"));
+        assertThat(acessorioResponse.getTamanho(), is("UNICO"));
     }
 
     @Test
     public void testDelete() {
-        // Adicionando um acessório no banco de dados
-        AcessorioDTO acessorio = new AcessorioDTO(null, null, null, null, null, null);
-        Long id =  (long) 1;
+
+        Long id =  2l;
         given()
                 .when().delete("/acessorios/" + id)
                 .then()
@@ -88,7 +92,7 @@ public class AcessorioResourceTest {
 
     @Test
     public void testFindById() {
-        Long id = 2L;
+        Long id = 1l;
         given()
                 .when().get("/acessorios/" + id)
                 .then()

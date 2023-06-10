@@ -106,15 +106,7 @@ public class EstadoResourceTest {
                 .when().get("/estados/" + id)
                 .then()
                 .statusCode(200);
-            }
-/* 
-            @Test
-            public void testCount() {
-                given()
-                .when().get("/estados/count")
-                .then()
-                .statusCode(200);
-            }*/
+            } 
 
             @Test
             public void testSearch() {
