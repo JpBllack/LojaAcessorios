@@ -1,17 +1,17 @@
 package br.unitins.service;
 
-import java.util.List;
-
 import br.unitins.dto.CartaoCreditoDTO;
 import br.unitins.dto.CompraResponseDTO;
 
+import java.util.List;
+
 public interface CompraService {
-    // recursos basicos
+
     List<CompraResponseDTO> getAll();
 
     CompraResponseDTO findById(Long id);
 
-    CompraResponseDTO comprarItens(Long idUsuario);
+    CompraResponseDTO comprarItens(Long id);
 
     void efetuarPagamentoPix(Long idUsuario);
 

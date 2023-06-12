@@ -38,7 +38,6 @@ public class CompraServiceImpl implements CompraService {
     @Inject
     PixRepository pixRepository;
 
-
     @Inject
     UsuarioRepository usuarioRepository;
 
@@ -47,7 +46,7 @@ public class CompraServiceImpl implements CompraService {
 
     @Override
     public List<CompraResponseDTO> getAll() {
-        List<Compra> list = compraRepository.listAll();
+        List<Compra> list = compraRepository.findAll();
         return list.stream().map(CompraResponseDTO::new).collect(Collectors.toList());
     }
 
@@ -61,79 +60,59 @@ public class CompraServiceImpl implements CompraService {
 
     @Override
     @Transactional
-    public CompraResponseDTO comprarItens(Long idUsuario) {
+    public CompraResponseDTO comprarItens(Long id) {
         double total = 0;
         Compra entity = new Compra();
-        long cont = itemCompraRepository.count();
-        List<ItemCompra> listaItens = new ArrayList<ItemCompra>();
+        List<ItemCompra> listaItens = new ArrayList<>();
 
-        while(cont > 0){
-            ItemCompra item = itemCompraRepository.findById(cont);
-            if (item.getUsuario().getId() == idUsuario){
+        List<ItemCompra> items = itemCompraRepository.findAll();
+        for (ItemCompra item : items) {
+            if (item.getUsuario().getId().equals(id)) {
                 listaItens.add(item);
-                total = total + item.getTotalItem();
+                total += item.getTotalItem();
             }
-            cont--;
         }
 
-        entity.setListaDeItens(listaItens);
+        entity.setItens(listaItens);
         entity.setTotalCompra(total);
-        entity.setUsuario(usuarioRepository.findById(idUsuario));
+        entity.setUsuario(usuarioRepository.findById(id));
 
         compraRepository.persist(entity);
 
         return new CompraResponseDTO(entity);
-    }
+}
+
 
     @Override
     @Transactional
-    public void efetuarPagamentoPix(Long idUsuario) {
+    public void efetuarPagamentoPix(Long id) {
+        Compra compra = compraRepository.findById(id);       
+         if (compra == null)
+            throw new NotFoundException("compra não encontrada.");
 
-        Compra compra = new Compra();
-        long cont = compraRepository.count();
-
-        while(cont > 0){
-            Compra compr = compraRepository.findById(cont);
-            if(compr.getUsuario().getId() == idUsuario){
-                compra = compraRepository.findById(cont);
-            }
-            cont--;
-        }
-
-        Pix pagamento = new Pix(compra.getTotalCompra(), compra.getUsuario().getLogin(), compra.getUsuario().getPessoa().getCpf());
+        Pix pagamento = new Pix(compra.getTotalCompra(), compra.getUsuario().getLogin(),
+                compra.getUsuario().getPessoa().getCpf());
 
         pixRepository.persist(pagamento);
 
         compra.setPagamento(pagamento);
-
     }
 
     @Override
     @Transactional
-    public void efetuarPagamentoCartaoCredito(Long idUsuario, CartaoCreditoDTO cartaoCreditoDTO) {
-        
-        Usuario usuario = usuarioRepository.findById(idUsuario);
+    public void efetuarPagamentoCartaoCredito(Long id, CartaoCreditoDTO cartaoCreditoDTO) {
+        Usuario usuario = usuarioRepository.findById(id);
+        Compra compra = compraRepository.findById(id);      
+        if (compra == null)
+            throw new NotFoundException("compra não encontrada.");
 
-        Compra compra = new Compra();
-        long cont = compraRepository.count();
+        CartaoCredito pagamento = new CartaoCredito(compra.getTotalCompra(), cartaoCreditoDTO.numeroCartao(),
+                cartaoCreditoDTO.nomeImpressoCartao(), usuario.getPessoa().getCpf(),
+                BandeiraCartao.valueOf(cartaoCreditoDTO.bandeiraCartao()));
 
-        while(cont > 0){
-            Compra compr = compraRepository.findById(cont);
-            if(compr.getUsuario().getId() == idUsuario){
-                compra = compraRepository.findById(cont);
-            }
-            cont--;
-        }
-
-        CartaoCredito pagamento = new CartaoCredito(compra.getTotalCompra(),
-                                            cartaoCreditoDTO.numeroCartao(),
-                                            cartaoCreditoDTO.nomeImpressoCartao(),
-                                            usuario.getPessoa().getCpf(),
-                                            BandeiraCartao.valueOf(cartaoCreditoDTO.bandeiraCartao()));
-        
         cartaoCreditoRepository.persist(pagamento);
 
         compra.setPagamento(pagamento);
     }
-    
+
 }

@@ -1,30 +1,28 @@
 package br.unitins.model;
 
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-
 @Entity
 public class Compra extends DefaultEntity {
-    
-    private double totalCompra = 0;
 
-    @OneToMany
-    @JoinColumn(name = "id_compra")
-    private List<ItemCompra> listaDeItens;
+    private double totalCompra;
+
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
+    private List<ItemCompra> itens;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToOne
-    @JoinColumn(name = "id_pagamento", unique = true)
-    private FormaPagamento pagamento;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCompra;
+
+    private Pix pagamentoPix;
+    
+    private CartaoCredito pagamentoCartaoCredito;
+
 
     public double getTotalCompra() {
         return totalCompra;
@@ -34,12 +32,12 @@ public class Compra extends DefaultEntity {
         this.totalCompra = totalCompra;
     }
 
-    public List<ItemCompra> getListaDeItens() {
-        return listaDeItens;
+    public List<ItemCompra> getItens() {
+        return itens;
     }
 
-    public void setListaDeItens(List<ItemCompra> listaDeItens) {
-        this.listaDeItens = listaDeItens;
+    public void setItens(List<ItemCompra> itens) {
+        this.itens = itens;
     }
 
     public Usuario getUsuario() {
@@ -50,22 +48,42 @@ public class Compra extends DefaultEntity {
         this.usuario = usuario;
     }
 
-    public FormaPagamento getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(FormaPagamento pagamento) {
-        this.pagamento = pagamento;
-    }
-
-    public Long getCompraId() {
-        return getId();
-    }
-
     public Date getDataCompra() {
-       
-        return null;
+        return dataCompra;
     }
 
+    public void setDataCompra(Date dataCompra) {
+        this.dataCompra = dataCompra;
+    }
+
+   public Pix getPagamentoPix() {
+        return pagamentoPix;
+    }
+
+    public void setPagamentoPix(Pix pagamentoPix) {
+        this.pagamentoPix = pagamentoPix;
+    }
+
+    public CartaoCredito getPagamentoCartaoCredito() {
+        return pagamentoCartaoCredito;
+    }
+
+    public void setPagamentoCartaoCredito(CartaoCredito pagamentoCartaoCredito) {
+        this.pagamentoCartaoCredito = pagamentoCartaoCredito;
+    }
+
+
+    public void setPagamento(Pix pagamento) {
+        // Definir o pagamento por Pix
+        this.pagamentoPix = pagamento;
+        this.pagamentoCartaoCredito = null; // Limpar o pagamento por cartão de crédito
     
+    }
+
+    public void setPagamento(CartaoCredito pagamento) {
+        // Definir o pagamento por cartão de crédito
+        this.pagamentoCartaoCredito = pagamento;
+        this.pagamentoPix = null; // Limpar o pagamento por Pix
+    }
+
 }

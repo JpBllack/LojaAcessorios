@@ -14,7 +14,7 @@ public record CompraResponseDTO(
     List<Map<String, Object>> listaDeItens
 ) {
     public CompraResponseDTO(Compra compra) {
-        this(compra.getId(),compra.getTotalCompra(), vizualizarProdutos(compra.getListaDeItens()));
+        this(compra.getId(),compra.getTotalCompra(), vizualizarProdutos(compra.getItens()));
     }
 
     public static Map<String, Object> encontrarProduto(String nome, double valor, int quant) {

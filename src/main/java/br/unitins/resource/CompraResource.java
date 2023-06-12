@@ -10,7 +10,7 @@ import br.unitins.dto.CompraResponseDTO;
 import br.unitins.dto.UsuarioResponseDTO;
 import br.unitins.service.CompraService;
 import br.unitins.service.UsuarioServiceImpl;
-import jakarta.annotation.security.RolesAllowed;
+//import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -43,16 +43,16 @@ public class CompraResource {
     public List<CompraResponseDTO> getAll() {
         return compraService.getAll();
     }
-
     @GET
     @Path("/{id}")
     public CompraResponseDTO findById(@PathParam("id") Long id) {
         return compraService.findById(id);
     }
+    
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed({"User"})
+   // @RolesAllowed({"User"})
     public Response comprarItens() {
 
         String login = jwt.getSubject();
@@ -67,7 +67,7 @@ public class CompraResource {
 
     @PATCH
     @Path("/carrinho/pagar-pix")
-    @RolesAllowed({ "User" })
+    //@RolesAllowed({ "User" })
     public Response pagarPix() {
         Result result = null;
 
@@ -91,7 +91,7 @@ public class CompraResource {
 
     @PATCH
     @Path("/carrinho/pagar-cartao-credito")
-    @RolesAllowed({ "User" })
+    //@RolesAllowed({ "User" })
     public Response pagarCartaoCredito(CartaoCreditoDTO cartaoCreditoDTO) {
         Result result = null;
 
