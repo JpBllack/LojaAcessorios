@@ -1,6 +1,7 @@
 package br.unitins.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +55,7 @@ public class CompraServiceImpl implements CompraService {
     public CompraResponseDTO findById(Long id) {
         Compra compra = compraRepository.findById(id);
         if (compra == null)
-            throw new NotFoundException("compra não encontrada.");
+            throw new NotFoundException("Compra não encontrada.");
         return new CompraResponseDTO(compra);
     }
 
@@ -73,24 +74,28 @@ public class CompraServiceImpl implements CompraService {
             }
         }
 
-        entity.setItens(listaItens);
+        entity.setItens(new HashSet<>(listaItens));
         entity.setTotalCompra(total);
         entity.setUsuario(usuarioRepository.findById(id));
 
         compraRepository.persist(entity);
 
         return new CompraResponseDTO(entity);
-}
-
+    }
 
     @Override
     @Transactional
     public void efetuarPagamentoPix(Long id) {
         Compra compra = compraRepository.findById(id);       
-         if (compra == null)
-            throw new NotFoundException("compra não encontrada.");
+        if (compra == null)
+            throw new NotFoundException("Compra não encontrada.");
 
-        Pix pagamento = new Pix(compra.getTotalCompra(), compra.getUsuario().getLogin(),
+
+
+
+
+
+            Pix pagamento = new Pix(compra.getTotalCompra(), compra.getUsuario().getLogin(),
                 compra.getUsuario().getPessoa().getCpf());
 
         pixRepository.persist(pagamento);
@@ -104,7 +109,7 @@ public class CompraServiceImpl implements CompraService {
         Usuario usuario = usuarioRepository.findById(id);
         Compra compra = compraRepository.findById(id);      
         if (compra == null)
-            throw new NotFoundException("compra não encontrada.");
+            throw new NotFoundException("Compra não encontrada.");
 
         CartaoCredito pagamento = new CartaoCredito(compra.getTotalCompra(), cartaoCreditoDTO.numeroCartao(),
                 cartaoCreditoDTO.nomeImpressoCartao(), usuario.getPessoa().getCpf(),
@@ -114,5 +119,4 @@ public class CompraServiceImpl implements CompraService {
 
         compra.setPagamento(pagamento);
     }
-
 }

@@ -2,7 +2,7 @@ package br.unitins.model;
 
 import jakarta.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Compra extends DefaultEntity {
@@ -10,7 +10,7 @@ public class Compra extends DefaultEntity {
     private double totalCompra;
 
     @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
-    private List<ItemCompra> itens;
+    private Set<ItemCompra> itensCompra;    
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -31,14 +31,14 @@ public class Compra extends DefaultEntity {
     public void setTotalCompra(double totalCompra) {
         this.totalCompra = totalCompra;
     }
-
-    public List<ItemCompra> getItens() {
-        return itens;
+    public Set<ItemCompra> getItens() {
+        return itensCompra;
     }
-
-    public void setItens(List<ItemCompra> itens) {
-        this.itens = itens;
+    
+    public void setItens(Set<ItemCompra> itensCompra) {
+        this.itensCompra = itensCompra;
     }
+    
 
     public Usuario getUsuario() {
         return usuario;

@@ -14,10 +14,32 @@ public class ItemCompra {
     private Produto produto;
 
     @ManyToOne
+    @JoinColumn(name = "compra_id")
+    private Compra compra;
+
+    
+
+    @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
     
+
+    private int quantidade;
+  
+
     
+    // Métodos de acesso (getters e setters)
+
+
+    public Compra getCompra() {
+        return compra;
+    }
+
+    public void setCompra(Compra compra) {
+        this.compra = compra;
+    }
+
+     
     public Usuario getUsuario() {
         return usuario;
     }
@@ -33,12 +55,6 @@ public class ItemCompra {
     public void setProduto(Produto produto) {
         this.produto = produto;
     }
-
-    private int quantidade;
-  
-
-    
-    // Métodos de acesso (getters e setters)
 
     public Long getItemcompraId() {
         return itemcompraId;

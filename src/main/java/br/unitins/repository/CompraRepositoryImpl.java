@@ -1,13 +1,14 @@
 package br.unitins.repository;
 
 import br.unitins.model.Compra;
-
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@ApplicationScoped
 public class CompraRepositoryImpl implements CompraRepository {
 
     @PersistenceContext
