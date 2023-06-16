@@ -19,11 +19,7 @@ public class Compra extends DefaultEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCompra;
 
-    private Pix pagamentoPix;
-    
-    private CartaoCredito pagamentoCartaoCredito;
-
-
+   
     public double getTotalCompra() {
         return totalCompra;
     }
@@ -54,36 +50,6 @@ public class Compra extends DefaultEntity {
 
     public void setDataCompra(Date dataCompra) {
         this.dataCompra = dataCompra;
-    }
-
-   public Pix getPagamentoPix() {
-        return pagamentoPix;
-    }
-
-    public void setPagamentoPix(Pix pagamentoPix) {
-        this.pagamentoPix = pagamentoPix;
-    }
-
-    public CartaoCredito getPagamentoCartaoCredito() {
-        return pagamentoCartaoCredito;
-    }
-
-    public void setPagamentoCartaoCredito(CartaoCredito pagamentoCartaoCredito) {
-        this.pagamentoCartaoCredito = pagamentoCartaoCredito;
-    }
-
-
-    public void setPagamento(Pix pagamento) {
-        // Definir o pagamento por Pix
-        this.pagamentoPix = pagamento;
-        this.pagamentoCartaoCredito = null; // Limpar o pagamento por cartão de crédito
-    
-    }
-
-    public void setPagamento(CartaoCredito pagamento) {
-        // Definir o pagamento por cartão de crédito
-        this.pagamentoCartaoCredito = pagamento;
-        this.pagamentoPix = null; // Limpar o pagamento por Pix
     }
 
 }

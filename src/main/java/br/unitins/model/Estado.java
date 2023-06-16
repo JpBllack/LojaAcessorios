@@ -4,10 +4,8 @@ import jakarta.persistence.*;
 
 
 @Entity
-public class Estado {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long IdEstado;
+public class Estado extends DefaultEntity{
+    
     private String nomeEstado;
     private String sigla;
     
@@ -18,13 +16,6 @@ public class Estado {
     public void setSigla(String sigla) {
         this.sigla = sigla;
     }
-    public Long getIdEstado() {
-        return IdEstado;
-    }
-    public void setIdEstado(Long idEstado) {
-        IdEstado = idEstado;
-    }
-
     public String getNomeEstado() {
         return nomeEstado;
     }

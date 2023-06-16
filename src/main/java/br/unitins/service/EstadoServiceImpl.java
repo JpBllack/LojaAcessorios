@@ -18,10 +18,13 @@ public class EstadoServiceImpl implements EstadoService {
     @Inject
     EntityManager em;
 
-    @Override
     public List<EstadoResponseDTO> getAll() {
         List<Estado> estados = em.createQuery("SELECT e FROM Estado e", Estado.class)
                 .getResultList();
+
+        if (estados == null) {
+            throw new RuntimeException("Lista vazia");
+        }
 
         return estados.stream()
                 .map(this::mapToResponseDTO)
@@ -67,7 +70,7 @@ public class EstadoServiceImpl implements EstadoService {
     }
 
     private EstadoResponseDTO mapToResponseDTO(Estado estado) {
-        return null;
+        return new EstadoResponseDTO(estado.getNomeEstado(), estado.getSigla());
     }
 
     @Override
@@ -82,19 +85,22 @@ public class EstadoServiceImpl implements EstadoService {
 
     @Override
     public List<EstadoResponseDTO> findByNome(String nome) {
-        List<Estado> estados = em.createQuery("SELECT e FROM Estado e WHERE e.nome LIKE :nome", Estado.class)
-                .setParameter("nome", "%" + nome + "%")
-                .getResultList();
+        List<Estado> estados = em.createQuery("SELECT e FROM Estado e WHERE e.nomeEstado LIKE :nome", Estado.class)
+        .setParameter("nome", "%" + nome + "%")
+        .getResultList();
+     
 
         return estados.stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
 
-   @Override
-    public long count() {
-        // Implemente o código para contar o número de estados
-        return 0;
-    }
+    @Override
+public long count() {
+    Long count = em.createQuery("SELECT COUNT(e) FROM Estado e", Long.class)
+            .getSingleResult();
+    return count != null ? count : 0;
+}
+
 
 }
