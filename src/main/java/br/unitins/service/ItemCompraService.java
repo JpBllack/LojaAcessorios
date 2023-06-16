@@ -5,7 +5,9 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import br.unitins.dto.ItemCompraDTO;
+import br.unitins.model.Acessorios;
 import br.unitins.model.ItemCompra;
+import br.unitins.model.Produto;
 import br.unitins.repository.ItemCompraRepository;
 
 @ApplicationScoped
@@ -17,8 +19,13 @@ public class ItemCompraService {
     // Método para criar um novo item de compra
     public void create(ItemCompraDTO itemCompraDTO) {
         ItemCompra itemCompra = new ItemCompra();
+        itemCompra.setItemcompraId(itemCompraDTO.itemcompraId());
+        itemCompra.setProduto(new Acessorios(itemCompraDTO.itemcompraId(),
+        itemCompraDTO.nome(),null, itemCompraDTO.preco(),null, itemCompraDTO.quantidade(), null, null, null));
+        itemCompra.setQuantidade(itemCompraDTO.quantidade());
         itemCompraRepository.create(itemCompra);
     }
+    
 
     // Método para atualizar um item de compra
     public void update(ItemCompraDTO itemCompraDTO) {

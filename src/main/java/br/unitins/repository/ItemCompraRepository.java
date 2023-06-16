@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
-
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import br.unitins.model.ItemCompra;
 
 @ApplicationScoped
 public class ItemCompraRepository {
+
+    @PersistenceContext
+    private EntityManager em;
 
     private List<ItemCompra> itensCompra;
 
@@ -47,8 +52,10 @@ public class ItemCompraRepository {
         return null;
     }
 
+   
     public List<ItemCompra> findAll() {
-        return itensCompra;
+        TypedQuery<ItemCompra> query = em.createQuery("SELECT ic FROM ItemCompra ic", ItemCompra.class);
+        return query.getResultList();
     }
 
     public long count() {
