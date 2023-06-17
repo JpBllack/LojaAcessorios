@@ -52,10 +52,9 @@ public class ItemCompraRepository {
         return null;
     }
 
-   
     public List<ItemCompra> findAll() {
-        return em.createQuery("SELECT ic FROM ItemCompra ic", ItemCompra.class)
-                 .getResultList();
+        TypedQuery<ItemCompra> query = em.createQuery("SELECT ic FROM ItemCompra ic", ItemCompra.class);
+        return query.getResultList();
     }
     
 
