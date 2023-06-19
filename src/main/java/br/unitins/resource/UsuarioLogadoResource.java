@@ -1,7 +1,5 @@
 package br.unitins.resource;
 
-
-
 import java.io.IOException;
 
 import javax.print.attribute.standard.Media;
@@ -39,9 +37,17 @@ public class UsuarioLogadoResource {
     public Response getUsuario() {
         // Obtendo o login a partir do token
         String login = jwt.getSubject();
-        UsuarioResponseDTO usuario = usuarioService.findByLogin(login);
 
-        return Response.ok(usuario).build();
+        try {
+            UsuarioResponseDTO usuario = usuarioService.findByLogin(login);
+            if (usuario != null) {
+                return Response.ok(usuario).build();
+            } else {
+                return Response.status(Status.NOT_FOUND).entity("Usuário não encontrado").build();
+            }
+        } catch (Exception e) {
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao buscar o usuário").build();
+        }
     }
 
     @PATCH
@@ -66,33 +72,40 @@ public class UsuarioLogadoResource {
     }
 }
 
-   /*  @PATCH
-    @Path("/telefone")
-    public Response alterarTelefone(TelefoneDTO telefoneDTO) {
-        // Obtendo o login a partir do token
-        String login = jwt.getSubject();
-
-        // Alterando o telefone
-        boolean sucesso = usuarioService.alterarTelefone(login, telefoneDTO.getTelefone());
-        if (sucesso) {
-            return Response.ok("Telefone alterado com sucesso").build();
-        } else {
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Falha ao alterar o telefone").build();
-        }
-    }
-
-    @PATCH
-    @Path("/endereco")
-    public Response alterarEndereco(EnderecoDTO enderecoDTO) {
-        // Obtendo o login a partir do token
-        String login = jwt.getSubject();
-
-        // Alterando o endereço
-        boolean sucesso = usuarioService.alterarEndereco(login, enderecoDTO.getEndereco());
-        if (sucesso) {
-            return Response.ok("Endereço alterado com sucesso").build();
-        } else {
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Falha ao alterar o endereço").build();
-        }
-    }  */
-
+/*
+ * @PATCH
+ * 
+ * @Path("/telefone")
+ * public Response alterarTelefone(TelefoneDTO telefoneDTO) {
+ * // Obtendo o login a partir do token
+ * String login = jwt.getSubject();
+ * 
+ * // Alterando o telefone
+ * boolean sucesso = usuarioService.alterarTelefone(login,
+ * telefoneDTO.getTelefone());
+ * if (sucesso) {
+ * return Response.ok("Telefone alterado com sucesso").build();
+ * } else {
+ * return Response.status(Status.INTERNAL_SERVER_ERROR).
+ * entity("Falha ao alterar o telefone").build();
+ * }
+ * }
+ * 
+ * @PATCH
+ * 
+ * @Path("/endereco")
+ * public Response alterarEndereco(EnderecoDTO enderecoDTO) {
+ * // Obtendo o login a partir do token
+ * String login = jwt.getSubject();
+ * 
+ * // Alterando o endereço
+ * boolean sucesso = usuarioService.alterarEndereco(login,
+ * enderecoDTO.getEndereco());
+ * if (sucesso) {
+ * return Response.ok("Endereço alterado com sucesso").build();
+ * } else {
+ * return Response.status(Status.INTERNAL_SERVER_ERROR).
+ * entity("Falha ao alterar o endereço").build();
+ * }
+ * }
+ */

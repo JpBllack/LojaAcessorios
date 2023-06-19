@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.NotFoundException;
-
+import br.unitins.dto.UsuarioDTO;
 import br.unitins.dto.UsuarioResponseDTO;
 import br.unitins.model.Usuario;
 import br.unitins.repository.UsuarioRepository;
@@ -100,6 +100,40 @@ public boolean alterarSenha(String login, String senhaAntiga, String novaSenha) 
 
     return true;
 }
+@Override
+@Transactional
+public UsuarioResponseDTO create(UsuarioDTO dto) {
+    Usuario usuario = new Usuario();
+    usuario.setId(dto.id());
+    usuario.setCpf(dto.cpf());
+    usuario.setNome(dto.nome());
+    usuario.setLogin(dto.login());
+    usuario.setSenha(dto.senha());
 
+    usuarioRepository.persist(usuario);
 
+    return UsuarioResponseDTO.valueOf(usuario);
 }
+
+    @Override
+    @Transactional
+    public UsuarioResponseDTO update(Long id, UsuarioDTO dto) {
+        Usuario usuario = usuarioRepository.findById(id);
+        if (usuario == null)
+            throw new NotFoundException("Usuário não encontrado.");
+
+        usuario.setId(dto.id());
+        usuario.setCpf(dto.cpf());
+        usuario.setNome(dto.nome());
+        usuario.setLogin(dto.login());
+        usuario.setSenha(dto.senha());
+
+
+        usuarioRepository.persist(usuario);
+
+        return UsuarioResponseDTO.valueOf(usuario);
+    }
+
+    // ...
+}
+

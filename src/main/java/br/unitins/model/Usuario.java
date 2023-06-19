@@ -14,12 +14,16 @@ import jakarta.persistence.OneToOne;
 @Entity
 public class Usuario extends DefaultEntity {
 
+    @Column(length = 60)
+    private String nome;
+
+    @Column(length = 11)
+    private String cpf;
+
+    private Sexo sexo;
+
     private String login;
     private String senha;
-
-    @OneToOne
-    @JoinColumn(name = "pessoa_id")
-    private Pessoa pessoa;
 
     @ElementCollection
     @CollectionTable(name = "perfis", joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id"))
@@ -37,14 +41,29 @@ public class Usuario extends DefaultEntity {
     @OneToMany(mappedBy = "usuario")
     private List<Endereco> listaEndereco;
 
-    public Pessoa getPessoa() {
-        return pessoa;
+    public String getNome() {
+        return nome;
     }
 
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
 
     public String getSenha() {
         return senha;

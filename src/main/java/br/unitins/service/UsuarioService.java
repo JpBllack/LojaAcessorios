@@ -2,6 +2,7 @@ package br.unitins.service;
 
 import java.util.List;
 
+import br.unitins.dto.UsuarioDTO;
 import br.unitins.dto.UsuarioResponseDTO;
 import br.unitins.model.Usuario;
 
@@ -33,5 +34,9 @@ public interface UsuarioService {
     boolean verificarSenha(String login, String senhaAntiga);
 
 	boolean alterarSenha(String login, String senhaAntiga, String novaSenha);
+
+    UsuarioResponseDTO create(UsuarioDTO dto);
+
+    UsuarioResponseDTO update(Long id, UsuarioDTO dto);
 
 }
