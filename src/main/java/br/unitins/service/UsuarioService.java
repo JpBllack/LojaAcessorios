@@ -17,9 +17,9 @@ public interface UsuarioService {
 
     UsuarioResponseDTO findByLogin(String login);
 
-  //  UsuarioResponseDTO create(UsuarioDTO UsuarioDTO);
+    UsuarioResponseDTO create(UsuarioDTO dto);
 
-   // UsuarioResponseDTO update(Long id, UsuarioDTO UsuarioDTO);
+    UsuarioResponseDTO update(Long id, UsuarioDTO dto);
 
     UsuarioResponseDTO update(Long id, String nomeImagem);
 
@@ -35,8 +35,5 @@ public interface UsuarioService {
 
 	boolean alterarSenha(String login, String senhaAntiga, String novaSenha);
 
-    UsuarioResponseDTO create(UsuarioDTO dto);
-
-    UsuarioResponseDTO update(Long id, UsuarioDTO dto);
-
+    
 }

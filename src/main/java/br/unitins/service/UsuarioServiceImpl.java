@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.NotFoundException;
@@ -30,13 +31,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioResponseDTO findById(Long id) {
-        Usuario pessoafisica = usuarioRepository.findById(id);
-        if (pessoafisica == null)
+        Usuario usuario = usuarioRepository.findById(id);
+        if (usuario == null)
             throw new NotFoundException("Usuário não encontrada.");
-        return UsuarioResponseDTO.valueOf(pessoafisica);
+        return UsuarioResponseDTO.valueOf(usuario);
     }
-
-    
 
     @Override
     @Transactional
@@ -72,48 +71,49 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     public UsuarioResponseDTO update(Long id, String nomeImagem) {
         return null;
-   
+
     }
 
     @Override
     @Transactional
     public boolean verificarSenha(String login, String senhaAntiga) {
-    Usuario usuario = usuarioRepository.findByLogin(login);
-    if (usuario == null)
-        throw new NotFoundException("Usuário não encontrado.");
+        Usuario usuario = usuarioRepository.findByLogin(login);
+        if (usuario == null)
+            throw new NotFoundException("Usuário não encontrado.");
 
-    return usuario.getSenha().equals(senhaAntiga);
-}
+        return usuario.getSenha().equals(senhaAntiga);
+    }
 
-@Override
-@Transactional
-public boolean alterarSenha(String login, String senhaAntiga, String novaSenha) {
-    Usuario usuario = usuarioRepository.findByLogin(login);
-    if (usuario == null)
-        throw new NotFoundException("Usuário não encontrado.");
+    @Override
+    @Transactional
+    public boolean alterarSenha(String login, String senhaAntiga, String novaSenha) {
+        Usuario usuario = usuarioRepository.findByLogin(login);
+        if (usuario == null)
+            throw new NotFoundException("Usuário não encontrado.");
 
-    if (!usuario.getSenha().equals(senhaAntiga))
-        return false;
+        if (!usuario.getSenha().equals(senhaAntiga))
+            return false;
 
-    usuario.setSenha(novaSenha);
-    usuarioRepository.persist(usuario);
+        usuario.setSenha(novaSenha);
+        usuarioRepository.persist(usuario);
 
-    return true;
-}
-@Override
-@Transactional
-public UsuarioResponseDTO create(UsuarioDTO dto) {
-    Usuario usuario = new Usuario();
-    usuario.setId(dto.id());
-    usuario.setCpf(dto.cpf());
-    usuario.setNome(dto.nome());
-    usuario.setLogin(dto.login());
-    usuario.setSenha(dto.senha());
+        return true;
+    }
 
-    usuarioRepository.persist(usuario);
+    @Override
+    @Transactional
+    public UsuarioResponseDTO create(UsuarioDTO dto) {
+        Usuario usuario = new Usuario();
+        usuario.setId(dto.id());
+        usuario.setCpf(dto.cpf());
+        usuario.setNome(dto.nome());
+        usuario.setLogin(dto.login());
+        usuario.setSenha(dto.senha());
 
-    return UsuarioResponseDTO.valueOf(usuario);
-}
+        usuario = usuarioRepository.getEntityManager().merge(usuario);
+
+        return UsuarioResponseDTO.valueOf(usuario);
+    }
 
     @Override
     @Transactional
@@ -128,7 +128,6 @@ public UsuarioResponseDTO create(UsuarioDTO dto) {
         usuario.setLogin(dto.login());
         usuario.setSenha(dto.senha());
 
-
         usuarioRepository.persist(usuario);
 
         return UsuarioResponseDTO.valueOf(usuario);
@@ -136,4 +135,3 @@ public UsuarioResponseDTO create(UsuarioDTO dto) {
 
     // ...
 }
-

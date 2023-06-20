@@ -42,7 +42,6 @@ public class UsuarioResource {
     }
 
     @POST
-    @Path("/usuarios")
     public Response insert(UsuarioDTO dto) {
         try {
             UsuarioResponseDTO usuarioResponseDTO = usuarioService.create(dto);

@@ -16,8 +16,6 @@ public class DefaultEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;  
 
-   // @Version
-   // private Integer version;
 
     private LocalDateTime dataInclusao;
 
