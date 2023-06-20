@@ -1,14 +1,16 @@
 package br.unitins.repository;
 
 import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jakarta.enterprise.context.ApplicationScoped;
-
 import br.unitins.model.Usuario;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 @ApplicationScoped
 public class UsuarioRepository implements PanacheRepository<Usuario> {
+    
+    private static final Logger LOG = LoggerFactory.getLogger(UsuarioRepository.class);
     
     public List<Usuario> findByNome(String nome){
         if (nome == null)
@@ -27,11 +29,10 @@ public class UsuarioRepository implements PanacheRepository<Usuario> {
     public Usuario findByLogin(String login){
         if (login == null)
             return null;
+        
+        LOG.debug("Procurando usuario pelo Login: {}", login); // Adiciona um log para o login sendo buscado
             
         return find("login = ?1 ", login).firstResult();
     }
-
-
-    
-
 }
+

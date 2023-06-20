@@ -1,13 +1,12 @@
 package br.unitins.resource;
 
-import java.io.IOException;
 
-import javax.print.attribute.standard.Media;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import br.unitins.application.Result;
 import br.unitins.dto.SenhaDTO;
 import br.unitins.dto.UsuarioResponseDTO;
+import br.unitins.service.FileService;
 import br.unitins.service.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -19,7 +18,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Response.Status;
 
 @Path("/usuariologado")
@@ -27,28 +25,25 @@ import jakarta.ws.rs.core.Response.Status;
 @Produces(MediaType.APPLICATION_JSON)
 public class UsuarioLogadoResource {
 
-    @Inject
+      @Inject
     JsonWebToken jwt;
 
     @Inject
     UsuarioService usuarioService;
 
+    @Inject
+    FileService fileService;
+
     @GET
     public Response getUsuario() {
-        // Obtendo o login a partir do token
-        String login = jwt.getSubject();
 
-        try {
-            UsuarioResponseDTO usuario = usuarioService.findByLogin(login);
-            if (usuario != null) {
-                return Response.ok(usuario).build();
-            } else {
-                return Response.status(Status.NOT_FOUND).entity("Usuário não encontrado").build();
-            }
-        } catch (Exception e) {
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao buscar o usuário").build();
-        }
+        // obtendo o login a partir do token
+        String login = jwt.getSubject();
+        UsuarioResponseDTO usuarioResponseDTO = usuarioService.findByLogin(login);
+
+        return Response.ok(usuarioResponseDTO).build();
     }
+
 
     @PATCH
     @Path("/senha")

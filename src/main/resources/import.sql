@@ -4,26 +4,32 @@
 -- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-2');
 -- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-3');
 
-insert into pessoa (nome) values('Michael Jackson');
-insert into pessoa (nome) values('The Weekend');
+INSERT INTO usuario (id, cpf, nome, login, senha, sexo)
+VALUES (2, '111.111.111-11', 'RM', 'rm', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 2);
 
-insert into pessoa(id, cpf, sexo) values (1, '111.111.111-11', 1);
-insert into pessoa(id, cpf, sexo ) values (2, '222.222.222-22',2);
+INSERT INTO usuario (id, cpf, nome, login, senha, sexo)
+VALUES (3, '222.222.222-22', 'Jin', 'jin', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 2);
 
+INSERT INTO usuario (id, cpf, nome, login, senha, sexo)
+VALUES (4, '333.333.333-33', 'Suga', 'suga', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 2);
 
-insert into usuario (login, senha, id_pessoa) values('Michael Jackson',
- 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 1);
-insert into usuario (login, senha, id_pessoa) values('The Weekend', 
-'GU5e4piE62AOdQr2e5/r0In9A7OJ89TjYO0SxgzZysU5HyEtOo2uzOiH3xUqXEQXEWXQCTkB/LQeiS4m0bFs7w==', 2);
+INSERT INTO usuario (id, cpf, nome, login, senha, sexo)
+VALUES (5, '444.444.444-44', 'J-Hope', 'jhope', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 2);
+
+INSERT INTO usuario (id, cpf, nome, login, senha, sexo)
+VALUES (6, '555.555.555-55', 'Jimin', 'jimin', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 2);
+
+INSERT INTO usuario (id, cpf, nome, login, senha, sexo)
+VALUES (7, '666.666.666-66', 'V', 'v', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 2);
+
+INSERT INTO usuario (id, cpf, nome, login, senha, sexo)
+VALUES (8, '777.777.777-77', 'Jungkook', 'jungkook', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 2); 
+
+-- TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==
 
 insert into estado (IdEstado, nomeEstado) values( 1,'Tocantins');
 insert into estado (Idestado, nomeEstado) values( 2,'Goiás');
 insert into estado (Idestado, nomeEstado) values( 3,'São Paulo');
 insert into estado (Idestado, nomeEstado) values( 4,'Rio de Janeiro');
 insert into estado (Idestado, nomeEstado) values( 5,'Pará');
-
-
-insert into perfis (id_usuario, perfil) values (1, 'Admin');
-insert into perfis (id_usuario, perfil) values (1, 'User');
-insert into perfis (id_usuario, perfil) values (2, 'User');
 
