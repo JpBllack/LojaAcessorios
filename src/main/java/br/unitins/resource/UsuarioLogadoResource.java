@@ -1,7 +1,5 @@
 package br.unitins.resource;
 
-
-
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import br.unitins.application.Result;
 import br.unitins.dto.SenhaDTO;
@@ -25,7 +23,7 @@ import jakarta.ws.rs.core.Response.Status;
 @Produces(MediaType.APPLICATION_JSON)
 public class UsuarioLogadoResource {
 
-      @Inject
+    @Inject
     JsonWebToken jwt;
 
     @Inject
@@ -36,14 +34,20 @@ public class UsuarioLogadoResource {
 
     @GET
     public Response getUsuario() {
+        try {
+            // obtendo o login a partir do token
+            String login = jwt.getSubject();
+            UsuarioResponseDTO usuarioResponseDTO = usuarioService.findByLogin(login);
 
-        // obtendo o login a partir do token
-        String login = jwt.getSubject();
-        UsuarioResponseDTO usuarioResponseDTO = usuarioService.findByLogin(login);
-
-        return Response.ok(usuarioResponseDTO).build();
+            return Response.ok(usuarioResponseDTO).build();
+        } catch (Exception e) {
+            // Tratamento da exceção
+            String login = jwt.getSubject();
+            System.out.println("Erro ao obter o login: " + login);
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
-
 
     @PATCH
     @Path("/senha")
