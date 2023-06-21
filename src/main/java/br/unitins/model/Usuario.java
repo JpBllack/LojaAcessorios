@@ -17,7 +17,7 @@ public class Usuario extends DefaultEntity {
     @Column(length = 60)
     private String nome;
 
-    @Column(length = 11)
+    @Column(length = 14)
     private String cpf;
 
     private Sexo sexo;
