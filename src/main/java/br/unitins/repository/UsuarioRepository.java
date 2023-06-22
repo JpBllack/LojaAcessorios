@@ -26,13 +26,13 @@ public class UsuarioRepository implements PanacheRepository<Usuario> {
         return find("login = ?1 AND senha = ?2 ", login, senha).firstResult();
     }
 
-    public Usuario findByLogin(String login){
+    public Usuario findByLogin(String login) {
         if (login == null)
             return null;
-        
-        LOG.debug("Procurando usuario pelo Login: {}", login); // Adiciona um log para o login sendo buscado
-            
-        return find("login = ?1 ", login).firstResult();
+
+        LOG.debug("Procurando usuário pelo Login: {}", login);
+
+        return find("login", login).firstResult();
     }
 }
 
